@@ -1,0 +1,12 @@
+/* Importação dos estilos globais */
+@import './globals.css';
+
+/* Importação dos estilos dos componentes */
+@import './components/Header.css';
+@import './components/Carousel.css';
+@import './components/CategoriesSection.css';
+@import './components/FeaturedBouquets.css';
+@import './components/DifferentialsSection.css';
+@import './components/CustomerReviews.css';
+@import './components/PromotionsSection.css';
+@import './components/Footer.css';

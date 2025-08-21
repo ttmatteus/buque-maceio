@@ -1,0 +1,296 @@
+/* ========================================
+   HEADER COMPONENT STYLES
+   ======================================== */
+
+/* ========================================
+   BARRA SUPERIOR BRANCA
+   ======================================== */
+/* Container principal da barra superior branca */
+.header-top {
+  background-color: #F0F1F2;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Container interno para centralizar conteúdo */
+.header-container {
+  width: 100%;
+}
+
+/* Layout flexível da barra superior com logo, pesquisa e ícones */
+.header-content {
+  display: flex;
+  align-items: center;
+  height: 5rem;
+  padding-left: 0.5rem;
+  padding-right: 1.5rem;
+}
+
+/* ========================================
+   LOGO E NOME DA EMPRESA
+   ======================================== */
+/* Container do logo e texto da marca */
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 2rem;
+}
+
+/* Container do logo com posicionamento relativo */
+.header-logo {
+  position: relative;
+}
+
+/* Estilização da imagem do logo com filtro dourado */
+.header-logo img {
+  height: 3rem;
+  width: 3rem;
+  object-fit: contain;
+  filter: sepia(100%) saturate(300%) hue-rotate(-10deg) brightness(0.9);
+}
+
+/* Container do texto da marca (nome e subtítulo) */
+.header-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Título principal da marca */
+.header-title {
+  letter-spacing: 0.025em;
+  line-height: 1.25;
+  font-size: 40px;
+  color: #161616;
+  font-family: 'Alegreya SC', serif;
+  font-weight: 500;
+}
+
+/* Subtítulo da marca */
+.header-subtitle {
+  letter-spacing: 0.025em;
+  line-height: 1.25;
+  margin-top: -0.25rem;
+  font-size: 16px;
+  color: #484848;
+  font-family: 'Alegreya SC', serif;
+  font-weight: 500;
+}
+
+/* ========================================
+   BARRA DE PESQUISA
+   ======================================== */
+/* Container da barra de pesquisa centralizada */
+.header-search {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin-left: -14rem;
+}
+
+/* Container do campo de pesquisa com posicionamento relativo */
+.search-container {
+  position: relative;
+  width: 500px;
+}
+
+/* Ícone da lupa posicionado dentro do campo */
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  padding-left: 0.75rem;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Estilização do ícone SVG da lupa */
+.search-icon svg {
+  height: 1.25rem;
+  width: 1.25rem;
+  color: #9ca3af;
+}
+
+/* Campo de input da pesquisa */
+.search-input {
+  display: block;
+  width: 100%;
+  padding-left: 2.5rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  line-height: 1.25rem;
+  background-color: white;
+  color: black;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
+
+/* Estilização do placeholder do campo */
+.search-input::placeholder {
+  color: #6b7280;
+}
+
+/* Remove outline ao focar no campo */
+.search-input:focus {
+  outline: none;
+}
+
+/* ========================================
+   ÍCONES DO USUÁRIO
+   ======================================== */
+/* Container dos ícones de ação (perfil, favoritos, carrinho) */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Botão base para os ícones */
+.header-button {
+  color: black;
+  transition: color 0.2s;
+}
+
+/* Hover padrão dos botões */
+.header-button:hover {
+  color: #4b5563;
+}
+
+/* Hover especial para o botão de favoritos (vermelho) */
+.header-button.favorites:hover {
+  color: #ef4444;
+}
+
+/* Tamanho dos ícones SVG */
+.header-button img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* ========================================
+   BARRA INFERIOR PRETA
+   ======================================== */
+/* Container da barra de navegação inferior */
+.header-bottom {
+  background-color: black;
+}
+
+/* Container interno da navegação */
+.header-nav-container {
+  width: 100%;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Layout da barra de navegação */
+.header-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 55px
+}
+
+/* Menu de navegação com os links */
+.header-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Botões de navegação individuais */
+.header-nav-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #FFFFFF;
+  font-family: 'Alegreya SC', serif;
+  font-weight: bold;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+/* Hover dos botões de navegação (dourado) */
+.header-nav-button:hover {
+  color: #FFD950;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .header-content {
+    padding-left: 0.25rem;
+    padding-right: 0.75rem;
+  }
+  
+  .header-brand {
+    margin-left: 1rem;
+  }
+  
+  .header-title {
+    font-size: 24px;
+  }
+  
+  .header-subtitle {
+    font-size: 12px;
+  }
+  
+  .header-search {
+    margin-left: 0;
+  }
+  
+  .search-container {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .header-actions {
+    gap: 1rem;
+  }
+  
+  .header-nav-menu {
+    gap: 1rem;
+  }
+  
+  .header-nav-button {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content {
+    flex-direction: column;
+    height: auto;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .header-search {
+    order: 3;
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .search-container {
+    max-width: none;
+  }
+  
+  .header-actions {
+    order: 2;
+  }
+  
+  .header-nav {
+    height: auto;
+    padding: 0.5rem 0;
+  }
+  
+  .header-nav-menu {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+}
