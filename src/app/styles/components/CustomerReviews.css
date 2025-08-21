@@ -78,7 +78,20 @@
 }
 .review-card:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.12); }
 
-.review-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+.review-header { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: flex-start; 
+  margin-bottom: 1rem; 
+}
+
+/* Ajuste específico apenas para o ícone do Google no header */
+.review-header .w-6.h-6 {
+  margin-left: 95px; /* Move o ícone do Google mais para a direita */
+  margin-right: auto;
+  position: relative; /* Move o ícone para a esquerda */
+  top: -4px; /* Sobe o ícone um pouco */
+}
 
 .review-text {
   flex: 1; margin-bottom: 1rem;

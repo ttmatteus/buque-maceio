@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import CategoryBadge from './CategoryBadge';
 
 interface Product {
@@ -14,6 +15,8 @@ interface Product {
 }
 
 const PromotionsSection: React.FC = () => {
+  const [discountValues, setDiscountValues] = useState<{ [key: number]: number }>({});
+
   const products: Product[] = [
     {
       id: 1,
@@ -49,6 +52,55 @@ const PromotionsSection: React.FC = () => {
       originalPrice: 134.90
     }
   ];
+
+  // Função para calcular o desconto
+  const calculateDiscount = (originalPrice: number, price: number) => {
+    return Math.round(((originalPrice - price) / originalPrice) * 100);
+  };
+
+  // Animação de contagem do desconto
+  // Esta animação faz o valor do desconto contar de 0 até o valor final
+  // e depois aplica um efeito de balanço quando termina
+  useEffect(() => {
+    const animateDiscounts = () => {
+      products.forEach((product) => {
+        const finalDiscount = calculateDiscount(product.originalPrice, product.price);
+        
+        // Inicia a contagem após um delay baseado no ID do produto
+        // Cada produto tem um delay diferente para criar um efeito cascata
+        setTimeout(() => {
+          let currentValue = 0;
+          const increment = finalDiscount / 40; // 40 passos para a contagem mais suave
+          
+          const timer = setInterval(() => {
+            currentValue += increment;
+            if (currentValue >= finalDiscount) {
+              currentValue = finalDiscount;
+              clearInterval(timer);
+              
+              // Adiciona o balanço após a contagem terminar
+              // O balanço só acontece quando o valor final é atingido
+              setTimeout(() => {
+                setDiscountValues(prev => ({
+                  ...prev,
+                  [product.id]: finalDiscount
+                }));
+              }, 200);
+            }
+            
+            // Atualiza o valor atual para criar o efeito de contagem
+            setDiscountValues(prev => ({
+              ...prev,
+              [product.id]: Math.floor(currentValue)
+            }));
+          }, 40); // 40ms entre cada incremento para movimento mais suave
+        }, product.id * 300); // Delay escalonado para cada produto
+      });
+    };
+
+    // Inicia a animação quando o componente montar
+    animateDiscounts();
+  }, []);
 
   const renderStars = (rating: number) => {
     const fullStars = Math.floor(rating);
@@ -117,9 +169,24 @@ const PromotionsSection: React.FC = () => {
                                 <div className="product-price">
                                   R$ {product.price.toFixed(2).replace('.', ',')}
                                 </div>
-                                <div className="discount-badge">
-                                  -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
-                                </div>
+                                <motion.div 
+                                  className="discount-badge"
+                                  initial={{ opacity: 0, scale: 0.8 }}
+                                  animate={{ 
+                                    opacity: 1, 
+                                    scale: discountValues[product.id] === calculateDiscount(product.originalPrice, product.price) ? 
+                                      [1, 1.1, 1, 1.1, 1] : 1,
+                                    rotate: discountValues[product.id] === calculateDiscount(product.originalPrice, product.price) ? 
+                                      [0, -6, 6, -6, 6, 0] : 0
+                                  }}
+                                  transition={{
+                                    opacity: { duration: 0.5, delay: product.id * 0.1 },
+                                    scale: { duration: 0.5, delay: product.id * 0.1 },
+                                    rotate: { duration: 0.6, ease: "easeInOut" }
+                                  }}
+                                >
+                                  -{discountValues[product.id] || 0}%
+                                </motion.div>
                               </div>
                             </div>
               </div>

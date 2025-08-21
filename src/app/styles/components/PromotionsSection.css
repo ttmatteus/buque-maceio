@@ -74,22 +74,26 @@
 .promotions-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 24px;
   justify-content: center;
   align-items: flex-start;
+  /* Adiciona padding para dar espaço às animações */
+  padding: 16px;
 }
 
 /* Grid de 2 colunas para tablets */
 @media (min-width: 768px) {
   .promotions-grid {
-    gap: 20px;
+    gap: 32px;
+    padding: 20px;
   }
 }
 
 /* Grid de 3 colunas para desktop */
 @media (min-width: 1024px) {
   .promotions-grid {
-    gap: 90px;
+    gap: 100px;
+    padding: 24px;
   }
 }
 
@@ -98,10 +102,13 @@
    ======================================== */
 /* Container individual de cada produto */
 .product-card {
-  overflow: hidden;
+  overflow: visible;
   width: 300px;
   cursor: pointer;
   transition: all 0.3s;
+  /* Adiciona padding para dar espaço às animações */
+  padding: 8px;
+  margin: -8px;
 }
 
 /* Hover do item do produto (elevação) */
@@ -173,6 +180,8 @@
   min-height: 220px;
   height: auto;
   align-items: flex-start;
+  /* Previne corte dos elementos animados */
+  overflow: visible;
 }
 
 /* ========================================
@@ -263,7 +272,7 @@
 /* ========================================
    PREÇOS
    ======================================== */
-/* Container dos preços */
+/* Container dos preços com overflow visible */
 .product-price-container {
   display: flex;
   align-items: flex-start;
@@ -272,13 +281,20 @@
   margin-top: 4px;
   padding-right: 0;
   padding-left: 0;
+  /* Previne corte dos badges animados */
+  overflow: visible;
 }
 
-/* Wrapper dos preços */
+/* Wrapper dos preços com overflow visible */
 .price-wrapper {
   display: flex;
   flex-direction: column;
   gap: 3px;
+  /* Previne corte dos badges animados */
+  overflow: visible;
+  /* Adiciona padding para dar espaço à animação */
+  padding: 4px;
+  margin: -4px;
 }
 
 /* Preço original riscado */
@@ -311,16 +327,28 @@
   border-radius: 12px;
   align-self: flex-start;
   margin-top: 2px;
+  /* Previne corte durante animação */
+  overflow: visible;
+  transform-origin: center;
+  /* Garante que o badge tenha espaço para balançar */
+  margin: 2px 8px 8px 0;
+  /* Adiciona espaço extra para a animação */
+  min-width: 40px;
+  text-align: center;
 }
 
 /* Responsividade */
 @media (max-width: 1024px) {
   .promotions-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    padding: 16px;
   }
   
   .product-card {
     width: 100%;
+    padding: 6px;
+    margin: -6px;
   }
   
   .product-image-container {
@@ -332,7 +360,8 @@
 @media (max-width: 768px) {
   .promotions-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 20px;
+    padding: 12px;
   }
   
   .promotions-title {
@@ -347,17 +376,25 @@
   .product-name {
     font-size: 18px;
   }
+  
+  .product-card {
+    padding: 4px;
+    margin: -4px;
+  }
 }
 
 @media (max-width: 640px) {
   .promotions-grid {
     grid-template-columns: 1fr;
     gap: 24px;
+    padding: 8px;
   }
   
   .product-card {
     max-width: 350px;
     margin: 0 auto;
+    padding: 6px;
+    margin: -6px;
   }
   
   .product-image-container {

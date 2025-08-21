@@ -10,25 +10,25 @@ const DifferentialsSection: React.FC = () => {
         </svg>
       ),
       title: "Amor pelas Flores",
-      description: "Lorem ipsum dolor sit amet consectetur adipiscing elit Lorem ipsum dolor sit amet consectetur.",
+      description: "Criamos cada arranjo com carinho e dedicação, levando sentimentos em forma de flores para momentos especiais",
       bgColor: "#F9C6D1"
     },
     {
       icon: <Leaf size={24} strokeWidth={2} fill="none" stroke="#000" />,
       title: "Qualidade Premium",
-      description: "Lorem ipsum dolor sit amet consectetur adipiscing elit Lorem ipsum dolor sit amet consectetur.",
+      description: "Selecionamos as melhores flores, garantindo frescor e durabilidade",
       bgColor: "#FFF0B0"
     },
     {
       icon: <Sprout size={24} strokeWidth={2} fill="none" stroke="#000" />,
       title: "Sustentabilidade",
-      description: "Lorem ipsum dolor sit amet consectetur adipiscing elit Lorem ipsum dolor sit amet consectetur.",
+      description: "Comprometidos com o meio ambiente, utilizamos práticas sustentáveis em todo nosso processo",
       bgColor: "#B0E0D0"
     },
     {
       icon: <Award size={24} strokeWidth={2} fill="none" stroke="#000" />,
       title: "Excelência",
-      description: "Lorem ipsum dolor sit amet consectetur adipiscing elit Lorem ipsum dolor sit amet consectetur.",
+      description: "Buscamos a excelência, oferecendo o melhor em design floral e atendimento.",
       bgColor: "#E0D0F0"
     }
   ];
