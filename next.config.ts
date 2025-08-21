@@ -1,12 +1,12 @@
-/** @type {import('next').NextConfig} */
+/** @type {import('next').Config} */
 const nextConfig = {
   reactStrictMode: true,
-  // Configurações comentadas para resolver problemas de CSS
-  // output: 'export', // habilitando export estático para surge :)
-  // trailingSlash: true, // evita problemas de roteamento no surge
-  // images: {
-  //   unoptimized: true // desabilitando otimização de imagem pro export estático
-  // },
+  // Configurações para exportação estática no Surge
+  output: 'export', // habilitando export estático para surge :)
+  trailingSlash: true, // evita problemas de roteamento no surge
+  images: {
+    unoptimized: true // desabilitando otimização de imagem pro export estático
+  },
   // removendo rewrites e redirects que não funcionam com export estático
   // Permitir acesso de dispositivos na rede local
   // allowedDevOrigins: [
