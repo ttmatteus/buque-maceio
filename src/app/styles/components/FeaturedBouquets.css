@@ -100,11 +100,22 @@
   width: 300px;
   cursor: pointer;
   transition: all 0.3s;
+  position: relative;
 }
 
 /* Hover do item do produto (elevação) */
 .featured-product-item:hover {
   transform: translateY(-4px);
+}
+
+/* Efeito de clique para cards clicáveis */
+.featured-product-item.clickable {
+  cursor: pointer;
+}
+
+.featured-product-item.clickable:active {
+  transform: translateY(-2px);
+  transition: transform 0.1s;
 }
 
 /* ========================================
@@ -120,8 +131,6 @@
 
 /* Imagem do produto */
 .featured-product-image {
-  width: 100%;
-  height: 100%;
   object-fit: cover;
   transition: transform 0.3s;
 }
@@ -186,6 +195,30 @@
 .featured-category-classico {
   color: #161616;
   background-color: #E5E5E5;
+}
+
+/* Categoria Elegante - Azul claro */
+.featured-category-elegante {
+  color: #1E40AF;
+  background-color: #DBEAFE;
+}
+
+/* Categoria Luxo - Dourado */
+.featured-category-luxo {
+  color: #92400E;
+  background-color: #FEF3C7;
+}
+
+/* Categoria Exótico - Roxo */
+.featured-category-exotico {
+  color: #7C3AED;
+  background-color: #E9D5FF;
+}
+
+/* Categoria Aromático - Verde escuro */
+.featured-category-aromatico {
+  color: #065F46;
+  background-color: #D1FAE5;
 }
 
 /* ========================================

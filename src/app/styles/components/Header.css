@@ -9,11 +9,14 @@
 .header-top {
   background-color: #F0F1F2;
   border-bottom: 1px solid #e5e7eb;
+  position: relative;
+  z-index: 9998;
 }
 
 /* Container interno para centralizar conteúdo */
 .header-container {
   width: 100%;
+  max-width: 100vw;
 }
 
 /* Layout flexível da barra superior com logo, pesquisa e ícones */
@@ -23,6 +26,8 @@
   height: 5rem;
   padding-left: 0.5rem;
   padding-right: 1.5rem;
+  max-width: 100%;
+  flex-wrap: nowrap;
 }
 
 /* ========================================
@@ -33,7 +38,13 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-left: 2rem;
+  margin-left: 0;
+  transition: all 0.3s ease;
+}
+
+.header-brand:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
 }
 
 /* Container do logo com posicionamento relativo */
@@ -83,14 +94,18 @@
 .header-search {
   flex: 1;
   display: flex;
-  justify-content: center;
-  margin-left: -14rem;
+  justify-content: flex-start;
+  margin-left: 120px;
+  max-width: 100%;
 }
 
 /* Container do campo de pesquisa com posicionamento relativo */
 .search-container {
-  position: relative;
-  width: 500px;
+  position: relative !important;
+  width: 500px !important;
+  max-width: 600px !important;
+  min-width: 200px !important;
+  flex-shrink: 0 !important;
 }
 
 /* Ícone da lupa posicionado dentro do campo */
@@ -146,8 +161,9 @@
 /* Container dos ícones de ação (perfil, favoritos, carrinho) */
 .header-actions {
   display: flex;
-  align-items: center;
-  gap: 1.5rem;
+  align-items: flex-start;
+  gap: 18px;
+  margin-top: -8px;
 }
 
 /* Botão base para os ícones */
@@ -178,6 +194,8 @@
 /* Container da barra de navegação inferior */
 .header-bottom {
   background-color: black;
+  position: relative;
+  z-index: 9998;
 }
 
 /* Container interno da navegação */
@@ -220,11 +238,118 @@
   color: #FFD950;
 }
 
-/* Responsividade */
+/* ========================================
+   DROPDOWN DE SENTIMENTOS
+   ======================================== */
+/* Container do dropdown */
+.header-nav-dropdown {
+  position: relative;
+  z-index: 99999;
+}
+
+/* Dropdown de sentimentos */
+.sentimentos-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: -30px;
+  transform: none;
+  background-color: #000000;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  padding: 12px 0;
+  min-width: 150px;
+  z-index: 99999;
+  margin-top: 0;
+  overflow: hidden;
+}
+
+/* Header do dropdown - removido */
+
+/* Opção individual do dropdown */
+.sentimento-option {
+  display: block;
+  width: 100%;
+  padding: 16px 20px;
+  text-align: center;
+  background: none;
+  border: none;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 0;
+}
+
+/* Hover das opções */
+.sentimento-option:hover {
+  background-color: #FFD950;
+  color: #000000;
+}
+
+/* Primeira opção com borda superior arredondada */
+.sentimento-option:first-child {
+  margin-top: 0;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+/* Última opção com borda inferior arredondada */
+.sentimento-option:last-child {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+/* ========================================
+   RESPONSIVIDADE
+   ======================================== */
+
+/* Breakpoint para telas muito grandes */
+@media (min-width: 1400px) {
+  .header-content {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  
+  .search-container {
+    max-width: 600px;
+  }
+}
+
+/* Breakpoint para tablets grandes */
+@media (max-width: 1024px) {
+  .header-search {
+    margin-left: 0;
+  }
+  
+  .search-container {
+    max-width: 400px;
+  }
+  
+  .header-nav-menu {
+    gap: 1.5rem;
+  }
+  
+  .header-content {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .header-nav {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Breakpoint para tablets */
 @media (max-width: 768px) {
   .header-content {
     padding-left: 0.25rem;
     padding-right: 0.75rem;
+    height: 4rem;
+    flex-wrap: wrap;
   }
   
   .header-brand {
@@ -232,15 +357,19 @@
   }
   
   .header-title {
-    font-size: 24px;
+    font-size: 28px;
   }
   
   .header-subtitle {
-    font-size: 12px;
+    font-size: 14px;
   }
   
   .header-search {
     margin-left: 0;
+    order: 3;
+    flex: none;
+    width: 100%;
+    margin-top: 0.5rem;
   }
   
   .search-container {
@@ -259,14 +388,97 @@
   .header-nav-button {
     font-size: 12px;
   }
+  
+  .header-content {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 1rem;
+  }
+  
+  .header-search {
+    order: 3;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  .search-container {
+    max-width: none;
+  }
+  
+  /* Ajuste do dropdown para mobile */
+  .sentimentos-dropdown {
+    min-width: 140px;
+    left: 0;
+    transform: none;
+  }
+  
+  .sentimento-option {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
 }
 
+/* Breakpoint para dispositivos móveis grandes */
+@media (max-width: 640px) {
+  .header-content {
+    padding: 0.75rem;
+  }
+  
+  .header-brand {
+    margin-left: 0.5rem;
+  }
+  
+  .header-title {
+    font-size: 24px;
+  }
+  
+  .header-subtitle {
+    font-size: 12px;
+  }
+  
+  .header-actions {
+    gap: 0.75rem;
+  }
+  
+  .header-nav {
+    height: auto;
+    padding: 0.5rem 0;
+  }
+  
+  .header-nav-menu {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+  
+  .header-nav-button {
+    font-size: 11px;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  /* Ajuste do dropdown para mobile pequeno */
+  .sentimentos-dropdown {
+    min-width: 120px;
+  }
+  
+  .sentimento-option {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}
+
+/* Breakpoint para dispositivos móveis pequenos */
 @media (max-width: 480px) {
   .header-content {
     flex-direction: column;
     height: auto;
     padding: 1rem;
     gap: 1rem;
+  }
+  
+  .header-brand {
+    margin-left: 0;
+    justify-content: center;
   }
   
   .header-search {
@@ -281,6 +493,7 @@
   
   .header-actions {
     order: 2;
+    justify-content: center;
   }
   
   .header-nav {
@@ -292,5 +505,46 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.5rem;
+  }
+  
+  .header-nav-button {
+    font-size: 10px;
+    padding: 0.4rem 0.6rem;
+  }
+  
+  /* Ajuste do dropdown para mobile muito pequeno */
+  .sentimentos-dropdown {
+    min-width: 100px;
+  }
+  
+  .sentimento-option {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+}
+
+/* Breakpoint para dispositivos muito pequenos */
+@media (max-width: 360px) {
+  .header-title {
+    font-size: 20px;
+  }
+  
+  .header-subtitle {
+    font-size: 11px;
+  }
+  
+  .header-nav-button {
+    font-size: 9px;
+    padding: 0.3rem 0.5rem;
+  }
+  
+  /* Ajuste final do dropdown */
+  .sentimentos-dropdown {
+    min-width: 90px;
+  }
+  
+  .sentimento-option {
+    padding: 5px 6px;
+    font-size: 10px;
   }
 }

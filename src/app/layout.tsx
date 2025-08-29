@@ -1,8 +1,18 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Alegreya_SC, Nunito_Sans } from 'next/font/google';
 import './styles/index.css';
 
 const inter = Inter({ subsets: ['latin'] });
+const alegreyaSC = Alegreya_SC({ 
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  variable: '--font-alegreya-sc'
+});
+const nunitoSans = Nunito_Sans({ 
+  subsets: ['latin'],
+  weight: ['400', '600', '700', '800'],
+  variable: '--font-nunito-sans'
+});
 
 export const metadata: Metadata = {
   title: 'Floral - Loja de Buquês',
@@ -16,11 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" className="scroll-smooth">
-      <head>
-        <link href="https://fonts.googleapis.com/css2?family=Alegreya+SC:wght@400;500;700&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
-      </head>
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${inter.className} ${alegreyaSC.variable} ${nunitoSans.variable} antialiased`}>
         <div className="min-h-screen">
           {children}
         </div>

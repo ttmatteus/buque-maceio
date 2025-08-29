@@ -72,18 +72,20 @@
    ======================================== */
 /* Grid responsivo dos produtos */
 .promotions-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 24px;
   justify-content: center;
   align-items: flex-start;
   /* Adiciona padding para dar espaço às animações */
   padding: 16px;
+  margin-left: 48px;
 }
 
 /* Grid de 2 colunas para tablets */
 @media (min-width: 768px) {
   .promotions-grid {
+    grid-template-columns: repeat(2, 1fr);
     gap: 32px;
     padding: 20px;
   }
@@ -92,7 +94,8 @@
 /* Grid de 3 colunas para desktop */
 @media (min-width: 1024px) {
   .promotions-grid {
-    gap: 100px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
     padding: 24px;
   }
 }
@@ -109,10 +112,18 @@
   /* Adiciona padding para dar espaço às animações */
   padding: 8px;
   margin: -8px;
+  position: relative;
 }
+
+/* Garantir que o card tenha o mesmo comportamento do FeaturedBouquets */
 
 /* Hover do item do produto (elevação) */
 .product-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Hover do item do produto para featured (consistência com FeaturedBouquets) */
+.product-card:hover .featured-product-image-container {
   transform: translateY(-4px);
 }
 
@@ -120,7 +131,8 @@
    IMAGEM DO PRODUTO
    ======================================== */
 /* Container da imagem com posicionamento relativo */
-.product-image-container {
+/* Usando as mesmas classes do FeaturedBouquets para consistência */
+.featured-product-image-container {
   position: relative;
   width: 271px;
   height: 328px;
@@ -128,7 +140,7 @@
 }
 
 /* Imagem do produto */
-.product-image {
+.featured-product-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -136,7 +148,7 @@
 }
 
 /* Hover da imagem (zoom) */
-.product-card:hover .product-image {
+.product-card:hover .featured-product-image {
   transform: scale(1.05);
 }
 
@@ -224,7 +236,7 @@
    ======================================== */
 /* Container das informações do produto (rating, preço) */
 .product-rating {
-  margin-top: 4px;
+  margin-top: 32px;
 }
 
 /* ========================================
@@ -343,6 +355,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
     padding: 16px;
+    margin-left: 16px;
   }
   
   .product-card {
@@ -351,9 +364,13 @@
     margin: -6px;
   }
   
-  .product-image-container {
+  .featured-product-image-container {
     width: 100%;
     height: 280px;
+  }
+  
+  .promotions-title {
+    font-size: 32px;
   }
 }
 
@@ -362,15 +379,15 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     padding: 12px;
+    margin-left: 12px;
   }
   
   .promotions-title {
-    font-size: 24px;
+    font-size: 28px;
   }
   
-  .product-content {
-    height: auto;
-    min-height: 200px;
+  .promotions-subtitle {
+    font-size: 15px;
   }
   
   .product-name {
@@ -381,35 +398,80 @@
     padding: 4px;
     margin: -4px;
   }
+  
+  .featured-product-image-container {
+    height: 260px;
+  }
 }
 
 @media (max-width: 640px) {
   .promotions-grid {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 20px;
     padding: 8px;
+    margin-left: 8px;
   }
   
   .product-card {
-    max-width: 350px;
+    max-width: 320px;
     margin: 0 auto;
     padding: 6px;
     margin: -6px;
   }
   
-  .product-image-container {
-    height: 250px;
+  .featured-product-image-container {
+    height: 240px;
   }
   
   .promotions-header {
-    margin-bottom: 32px;
+    margin-bottom: 24px;
   }
   
   .promotions-title {
-    font-size: 20px;
+    font-size: 24px;
   }
   
   .promotions-subtitle {
     font-size: 14px;
+  }
+  
+  .product-name {
+    font-size: 16px;
+  }
+  
+  .product-description {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .promotions-grid {
+    gap: 16px;
+    padding: 6px;
+    margin-left: 6px;
+  }
+  
+  .product-card {
+    max-width: 280px;
+  }
+  
+  .featured-product-image-container {
+    height: 220px;
+  }
+  
+  .promotions-title {
+    font-size: 22px;
+  }
+  
+  .promotions-subtitle {
+    font-size: 13px;
+  }
+  
+  .product-name {
+    font-size: 15px;
+  }
+  
+  .product-description {
+    font-size: 12px;
   }
 }

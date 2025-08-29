@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 interface Category {
   name: string;
@@ -55,9 +56,10 @@ const CategoriesSection: React.FC = () => {
                   className="category-item"
                 >
                   <div className="category-image-container">
-                    <img
+                    <Image
                       src={category.image}
                       alt={category.name}
+                      fill
                       className="category-image"
                     />
                   </div>

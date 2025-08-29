@@ -1,17 +1,21 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
 
 const Carousel: React.FC = () => {
+  const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying] = useState(true);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('left');
+  const [imagesLoaded, setImagesLoaded] = useState<Set<number>>(new Set());
+  const [isLoading, setIsLoading] = useState(true);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const slides = [
+  const slides = useMemo(() => [
     {
       image: '/images/decorative/flor1.png',
       title: 'Buquês Artesanais',
@@ -42,7 +46,43 @@ const Carousel: React.FC = () => {
       subtitle: 'Harmonia Perfeita',
       description: 'A combinação perfeita de cores e texturas'
     }
-  ];
+  ], []);
+
+  // Pré-carrega todas as imagens do carrossel
+  useEffect(() => {
+    const loadImage = (src: string, index: number) => {
+      return new Promise<void>((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          setImagesLoaded(prev => new Set(prev).add(index));
+          resolve();
+        };
+        img.onerror = () => {
+          console.error(`Erro ao carregar imagem ${index}: ${src}`);
+          // Marca como carregada mesmo com erro para não travar o carrossel
+          setImagesLoaded(prev => new Set(prev).add(index));
+          resolve();
+        };
+        img.src = src;
+      });
+    };
+
+    // Carrega todas as imagens em paralelo
+    const loadAllImages = async () => {
+      setIsLoading(true);
+      
+      try {
+        const promises = slides.map((slide, index) => loadImage(slide.image, index));
+        await Promise.all(promises);
+      } catch (error) {
+        console.error('Erro durante o carregamento:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadAllImages();
+  }, [slides]);
 
   useEffect(() => {
     if (!isPlaying) return;
@@ -51,7 +91,7 @@ const Carousel: React.FC = () => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 6000);
     return () => clearInterval(interval);
-  }, [isPlaying, slides.length]);
+  }, [isPlaying, slides]);
 
   const nextSlide = () => {
     setSlideDirection('left');
@@ -68,12 +108,17 @@ const Carousel: React.FC = () => {
     setCurrentSlide(index);
   };
 
+  const goToProducts = () => {
+    router.push('/produto');
+  };
 
   const contentVariants = {
     enter: { opacity: 0 },
     center: { opacity: 1 },
     exit: { opacity: 0 }
   };
+
+
 
   return (
     <div
@@ -82,6 +127,8 @@ const Carousel: React.FC = () => {
     >
       {slides.map((slide, index) => {
         const isActive = index === currentSlide;
+        const isImageLoaded = imagesLoaded.has(index);
+        
         return (
           <motion.div
             key={index}
@@ -96,9 +143,17 @@ const Carousel: React.FC = () => {
             }}
             className={`carousel-slide ${isActive ? 'active' : ''}`}
             style={{
-              backgroundImage: `url(${slide.image})`
+              backgroundImage: isImageLoaded ? `url(${slide.image})` : 'none'
             }}
-          />
+          >
+            {/* Placeholder enquanto a imagem carrega */}
+            {!isImageLoaded && (
+              <div className="carousel-slide-placeholder">
+                <div className="w-16 h-16 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+                <div className="mt-4 text-gray-500 text-sm">Carregando imagem {index + 1}...</div>
+              </div>
+            )}
+          </motion.div>
         );
       })}
 
@@ -149,7 +204,7 @@ const Carousel: React.FC = () => {
             transition={{ delay: 0.9, duration: 0.8 }}
             className="carousel-button-container"
           >
-            <button className="carousel-button">
+            <button className="carousel-button" onClick={goToProducts}>
               Nossos Produtos
             </button>
           </motion.div>
