@@ -1,48 +1,68 @@
 "use client";
 
-
-import Header from './components/Header';
-import Carousel from './components/Carousel';
-import CategoriesSection from './components/CategoriesSection';
-import FeaturedBouquets from './components/FeaturedBouquets';
-import DifferentialsSection from './components/DifferentialsSection';
-import PromotionsSection from './components/PromotionsSection';
-import Footer from './components/Footer';
-
-
+import { 
+  Header, 
+  Footer,
+  Carousel,
+  CategoriesSection,
+  FeaturedBouquets,
+  DifferentialsSection,
+  PromotionsSection,
+  LazySection,
+  PerformanceOptimizer
+} from './components';
 
 export default function Home() {
+  // Imagens críticas para pré-carregamento
+  const criticalImages = [
+    '/images/decorative/flor1.png',
+    '/images/decorative/flor2.png',
+    '/images/carousel/13.png',
+    '/images/carousel/14.png'
+  ];
+
   return (
-    <div className="bg-white">
+    <div className="bg-white overflow-hidden">
+      {/* Otimizador de Performance */}
+      <PerformanceOptimizer criticalImages={criticalImages} />
+      
       {/* header sempre carregado */}
       <Header />
       
-      {/* hero Section - Carousel */}
+      {/* hero Section - Carousel (carrega imediatamente) */}
       <div id="inicio" style={{ marginTop: '112px' }}>
         <Carousel />
       </div>
       
-      {/* seção de Categorias */}
+      {/* seção de Categorias - Lazy Loading */}
       <div id="tipos">
-        <CategoriesSection />
+        <LazySection threshold={0.2}>
+          <CategoriesSection />
+        </LazySection>
       </div>
       
-      {/* seção de Buquês em Destaque */}
+      {/* seção de Buquês em Destaque - Lazy Loading */}
       <div id="buques">
-        <FeaturedBouquets />
+        <LazySection threshold={0.2}>
+          <FeaturedBouquets />
+        </LazySection>
       </div>
       
-      {/* seção de Nossos Diferenciais */}
+      {/* seção de Nossos Diferenciais - Lazy Loading */}
       <div id="diferenciais">
-        <DifferentialsSection />
+        <LazySection threshold={0.2}>
+          <DifferentialsSection />
+        </LazySection>
       </div>
-      
-      {/* seção de Promoções da Semana */}
+
+      {/* seção de Promoções da Semana - Lazy Loading */}
       <div id="promocoes">
-        <PromotionsSection />
+        <LazySection threshold={0.2}>
+          <PromotionsSection />
+        </LazySection>
       </div>
       
-      {/* Footer */}
+      {/* Footer sempre carregado */}
       <Footer />
     </div>
   );

@@ -1,5 +1,7 @@
 "use client";
 
+import Image from 'next/image';
+
 interface Review {
   id: number;
   rating: number;
@@ -48,18 +50,18 @@ const CustomerReviews: React.FC = () => {
          {[...Array(5)].map((_, i) => {
            let fillPercentage;
            if (rating >= i + 1) {
-             fillPercentage = 1; // Estrela completamente cheia
+             fillPercentage = 1; 
            } else if (rating > i) {
-             // Para estrelas parciais, ajusta para ficar mais perceptível
+             // para estrelas parciais, ajusta para ficar mais perceptível
              const partial = rating - i;
-             fillPercentage = partial * 0.88; // Sempre reduz para ficar mais visível
+             fillPercentage = partial * 0.88; // sempre reduz para ficar mais visível
            } else {
-             fillPercentage = 0; // Estrela vazia
+             fillPercentage = 0; // estrela vazia
            }
            
            return (
              <div key={i} className="relative">
-               {/* Estrela vazia (fundo) */}
+               {/* estrela vazia (fundo) */}
                <svg
                  className={`${starSize} fill-current`}
                  style={{color: '#C4C4C4'}}
@@ -68,7 +70,7 @@ const CustomerReviews: React.FC = () => {
                  <path d="M10 15l-5.898 3.09 1.127-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.74 4.635 1.127 6.545z" />
                </svg>
                
-               {/* Estrela preenchida (sobreposição) */}
+               {/* estrela preenchida (sobreposição) */}
                <svg
                  className={`${starSize} fill-current absolute top-0 left-0`}
                  style={{
@@ -101,13 +103,12 @@ const CustomerReviews: React.FC = () => {
               {[...Array(5)].map((_, i) => {
                 let fillPercentage;
                 if (4.9 >= i + 1) {
-                  fillPercentage = 1; // Estrela completamente cheia
+                  fillPercentage = 1; 
                 } else if (4.9 > i) {
-                  // Para estrelas parciais, ajusta para ficar mais perceptível
                   const partial = 4.9 - i;
-                  fillPercentage = partial * 0.88; // Sempre reduz para ficar mais visível
+                  fillPercentage = partial * 0.88; 
                 } else {
-                  fillPercentage = 0; // Estrela vazia
+                  fillPercentage = 0;
                 }
 
                 return (
@@ -162,9 +163,11 @@ const CustomerReviews: React.FC = () => {
                    </div>
                    {/* Google Logo */}
                    <div className="w-6 h-6">
-                     <img 
+                     <Image 
                        src="/images/icons/google-g-logo.svg" 
                        alt="Google" 
+                       width={24}
+                       height={24}
                        className="w-full h-full"
                      />
                    </div>
@@ -199,9 +202,11 @@ const CustomerReviews: React.FC = () => {
           </p>
           <div className="google-brand">
             <div className="google-logo">
-              <img 
+              <Image 
                 src="/images/icons/google-g-logo.svg" 
                 alt="Google" 
+                width={24}
+                height={24}
                 className="w-6 h-6"
               />
             </div>

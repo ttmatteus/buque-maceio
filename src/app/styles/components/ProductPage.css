@@ -1,0 +1,102 @@
+/* ========================================
+   PRODUCT PAGE COMPONENT STYLES
+   ======================================== */
+
+/* Forçar fundo branco - sobrescrever CSS global */
+html, body {
+  background-color: white !important;
+  background: white !important;
+}
+
+.product-page-container,
+.product-page-content,
+.product-page-wrapper {
+  background-color: white !important;
+  background: white !important;
+}
+
+/* ========================================
+   TÍTULO DA PÁGINA
+   ======================================== */
+.product-page-title {
+  font-family: 'Alegreya SC', serif;
+  font-size: 28px;
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+/* ========================================
+   CONTAINER PRINCIPAL
+   ======================================== */
+.product-page-container {
+  min-height: 100vh;
+  background-color: white;
+  padding-top: 180px;
+}
+
+.product-page-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+/* ========================================
+   RESPONSIVIDADE
+   ======================================== */
+@media (min-width: 640px) {
+  .product-page-content {
+    padding: 32px 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .product-page-content {
+    padding: 32px 32px;
+  }
+}
+
+/* ========================================
+   FILTROS
+   ======================================== */
+.product-filters-section {
+  margin-bottom: 32px;
+}
+
+/* ========================================
+   GRID DE PRODUTOS
+   ======================================== */
+.product-grid-section {
+  margin-top: 64px;
+}
+
+/* ========================================
+   ESTADOS DE CARREGAMENTO
+   ======================================== */
+.product-page-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+/* ========================================
+   ESTADOS VAZIOS
+   ======================================== */
+.product-page-empty {
+  text-align: center;
+  padding: 64px 16px;
+  color: #6b7280;
+}
+
+.product-page-empty h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.product-page-empty p {
+  font-size: 16px;
+  color: #9ca3af;
+}

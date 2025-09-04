@@ -1,0 +1,279 @@
+/* ========================================
+   FILTER SIDEBAR COMPONENT STYLES
+   ======================================== */
+
+.filter-sidebar {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: black;
+}
+
+/* Garantir que todos os textos sejam pretos */
+.filter-sidebar * {
+  color: black !important;
+}
+
+/* Exceções para elementos que devem manter suas cores */
+.filter-sidebar-button {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: white !important; /* Botão preto com texto branco */
+}
+
+.filter-sidebar-header {
+  font-family: 'Alegreya SC', serif;
+  font-size: 32px;
+  font-weight: 500;
+  color: black !important;
+}
+
+.filter-sidebar-header h2 {
+  font-family: 'Alegreya SC', serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: black !important;
+}
+
+.filter-sidebar-section-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: black !important;
+}
+
+.filter-sidebar-section-title span {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: black !important;
+}
+
+.filter-sidebar-option {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: black !important;
+}
+
+.filter-sidebar-counter {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: black !important;
+}
+
+.filter-sidebar-button {
+  font-family: 'Alegreya SC', serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.filter-sidebar-button-clear {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: black !important;
+}
+
+/* Animações - Regras específicas para sobrescrever Tailwind */
+.filter-sidebar-animation {
+  transition: transform 800ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+  will-change: transform !important;
+}
+
+/* Sobrescrever classes Tailwind específicas com !important */
+.filter-sidebar-content.translate-x-0 {
+  transform: translateX(0) !important;
+}
+
+.filter-sidebar-content.translate-x-full {
+  transform: translateX(100%) !important;
+}
+
+/* Forçar transform inicial - sidebar começa fora da tela à direita */
+.filter-sidebar-content {
+  transform: translateX(100%) !important;
+}
+
+/* Garantir que a animação funcione */
+.filter-sidebar-content.filter-sidebar-animation {
+  transform: translateX(100%) !important;
+}
+
+.filter-sidebar-content.filter-sidebar-animation.translate-x-0 {
+  transform: translateX(0) !important;
+}
+
+.filter-sidebar-content.filter-sidebar-animation.translate-x-full {
+  transform: translateX(100%) !important;
+}
+
+.filter-sidebar-overlay {
+  z-index: 40 !important;
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  transition: background-color 800ms cubic-bezier(0.4, 0, 0.2, 1), opacity 800ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.filter-sidebar-content {
+  z-index: 50 !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+}
+
+
+.filter-sidebar-button:hover {
+  background-color: #1f1f1f;
+}
+
+.filter-sidebar-button-clear:hover {
+  background-color: #f3f4f6;
+}
+
+/* Animações das seções expandindo/contraindo */
+.filter-sidebar-section-content {
+  overflow: hidden;
+  transition: max-height 600ms ease-in-out, opacity 600ms ease-in-out;
+  max-height: 0;
+  opacity: 0;
+}
+
+.filter-sidebar-section-content.expanded {
+  max-height: 1500px; /* Aumentado para acomodar todas as subcategorias completamente */
+  opacity: 1;
+}
+
+/* Estilos para subcategorias */
+.filter-sidebar-subcategory-content {
+  overflow: hidden; /* Volta para hidden para controlar o scroll */
+  transition: all 400ms ease-in-out;
+  max-height: 0;
+  opacity: 0;
+}
+
+.filter-sidebar-subcategory-content.expanded {
+  max-height: 300px; /* Altura fixa para criar scroll interno */
+  opacity: 1;
+  margin-bottom: 16px; /* Espaço extra abaixo da subcategoria */
+  overflow-y: auto; /* Scroll vertical interno */
+}
+
+/* Estilização do scroll interno da subcategoria */
+.filter-sidebar-subcategory-content.expanded::-webkit-scrollbar {
+  width: 6px;
+}
+
+.filter-sidebar-subcategory-content.expanded::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.filter-sidebar-subcategory-content.expanded::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+.filter-sidebar-subcategory-content.expanded::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Para Firefox */
+.filter-sidebar-subcategory-content.expanded {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+/* Ajuste do espaçamento entre seções */
+.filter-sidebar-section-content {
+  margin-bottom: 24px; /* Mais espaço entre seções */
+}
+
+/* Ajuste do espaçamento entre subcategorias */
+.filter-sidebar-subcategory-content.expanded {
+  padding-bottom: 16px; /* Espaço interno para acomodar todas as tags */
+}
+
+/* Background cinza claro nos itens das seções */
+.filter-sidebar-section-content .space-y-2 label {
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 4px 0;
+  display: block;
+  transition: background-color 200ms ease-in-out;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.filter-sidebar-section-content .space-y-2 label:hover {
+  background-color: #e9ecef;
+}
+
+/* Checkbox personalizado - quadrado preto */
+.filter-sidebar-section-content input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #d1d5db;
+  border-radius: 3px;
+  background-color: white;
+  cursor: pointer;
+  position: relative;
+  margin-right: 8px;
+}
+
+.filter-sidebar-section-content input[type="checkbox"]:checked {
+  background-color: #1f1f1f;
+  border-color: #1f1f1f;
+}
+
+.filter-sidebar-section-content input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Garantir que o container dos itens tenha espaço suficiente */
+.filter-sidebar-section-content .space-y-2 {
+  padding: 8px 0;
+  margin: 0;
+}
+
+/* Personalização do scroll para cinza */
+.filter-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.filter-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.filter-sidebar::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+.filter-sidebar::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Para Firefox */
+.filter-sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+/* Animação dos ícones + e - */
+.filter-sidebar-section-icon {
+  transition: transform 400ms ease-in-out;
+}
+
+.filter-sidebar-section-icon.expanded {
+  transform: rotate(180deg);
+}

@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
             <div className="footer-section">
               <h4 className="footer-title">Empresa</h4>
               <ul className="footer-links">
-                <li><a href="#" className="footer-link">Quem Somos</a></li>
+                <li><a href="https://vitalhaters.surge.sh" className="footer-link">Quem Somos</a></li>
                 <li><a href="#" className="footer-link">O que oferecemos</a></li>
               </ul>
             </div>

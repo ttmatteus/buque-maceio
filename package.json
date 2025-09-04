@@ -12,6 +12,7 @@
     "deploy": "npm run build && surge ./out"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "axios": "^1.11.0",
     "chart.js": "^4.5.0",
     "file-saver": "^2.0.5",
