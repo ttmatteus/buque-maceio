@@ -1,0 +1,310 @@
+/* ========================================
+   CAROUSEL COMPONENT STYLES
+   ======================================== */
+
+/* ========================================
+   CONTAINER PRINCIPAL
+   ======================================== */
+/* Container principal do carrossel com altura fixa */
+.carousel-container {
+  height: 85vh;
+  min-height: 700px;
+  overflow: hidden;
+  background-color: transparent;
+  width: 100%;
+  position: relative;
+}
+
+/* ========================================
+   SLIDES DO CARROSSEL
+   ======================================== */
+/* Slide individual com posicionamento absoluto */
+.carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+/* Slide ativo com z-index maior para ficar visível */
+.carousel-slide.active {
+  z-index: 3;
+}
+
+/* ========================================
+   OVERLAY E CONTEÚDO
+   ======================================== */
+/* Overlay escuro sobre as imagens para melhorar legibilidade do texto */
+.carousel-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.15);
+  z-index: 3;
+}
+
+/* Container do conteúdo textual centralizado */
+.carousel-content {
+  position: absolute;
+  top: calc(50% + 40px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  text-align: center;
+  color: white;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+/* ========================================
+   ELEMENTOS DE TEXTO
+   ======================================== */
+/* Subtítulo do slide */
+.carousel-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #c4c4c4;
+  margin-bottom: 16px;
+  font-weight: 400;
+}
+
+/* Título principal do slide */
+.carousel-title {
+  font-family: 'Alegreya SC', serif;
+  font-size: 48px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  line-height: 1.1;
+  color: #ffffff;
+}
+
+/* Descrição do slide */
+.carousel-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #c4c4c4;
+  margin-bottom: 40px;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ========================================
+   BOTÃO PRINCIPAL
+   ======================================== */
+/* Container do botão de ação */
+.carousel-button-container {
+  margin-top: 55px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Botão principal dourado */
+.carousel-button {
+  background-color: #FFD950;
+  color: #222222;
+  padding: 16px 32px;
+  border-radius: 50px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Nunito Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 187px;
+  height: 47px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hover do botão principal */
+.carousel-button:hover {
+  background-color: #FFE066;
+}
+
+/* ========================================
+   BOTÕES DE NAVEGAÇÃO
+   ======================================== */
+/* Botão de navegação base (anterior/próximo) */
+.carousel-nav-button {
+  position: absolute;
+  top: calc(50% - 30px);
+  background-color: rgba(247, 247, 247, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 30;
+  transition: all 0.3s ease;
+}
+
+/* Hover dos botões de navegação */
+.carousel-nav-button:hover {
+  background-color: #404040;
+  transform: scale(1.1);
+}
+
+/* Botão de navegação anterior (esquerda) */
+.carousel-nav-button.prev {
+  left: 60px;
+}
+
+/* Botão de navegação próximo (direita) */
+.carousel-nav-button.next {
+  right: 60px;
+}
+
+/* ========================================
+   INDICADORES
+   ======================================== */
+/* Container dos indicadores de slide */
+.carousel-indicators {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 30;
+}
+
+/* Indicador individual (bolinha) */
+.carousel-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background-color: #D9D9D9;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Indicador ativo (slide atual) */
+.carousel-indicator.active {
+  background-color: #FFD950;
+}
+
+/* Hover dos indicadores */
+.carousel-indicator:hover {
+  background-color: #FFD950;
+  transform: scale(1.2);
+}
+
+/* Animações */
+.carousel-fade-in {
+  animation: fadeIn 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.carousel-slide-in-up {
+  animation: slideInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .carousel-container {
+    height: 500px;
+  }
+  
+  .carousel-title {
+    font-size: 32px;
+  }
+  
+  .carousel-description {
+    font-size: 14px;
+    max-width: 400px;
+  }
+  
+  .carousel-nav-button {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .carousel-nav-button.prev {
+    left: 20px;
+  }
+  
+  .carousel-nav-button.next {
+    right: 20px;
+  }
+  
+  .carousel-indicators { bottom: 20px; }
+}
+
+@media (max-width: 480px) {
+  .carousel-container {
+    height: 400px;
+  }
+  
+  .carousel-content {
+    padding: 0 15px;
+  }
+  
+  .carousel-title {
+    font-size: 24px;
+  }
+  
+  .carousel-subtitle {
+    font-size: 14px;
+  }
+  
+  .carousel-description {
+    font-size: 12px;
+    max-width: 300px;
+  }
+  
+  .carousel-button {
+    padding: 12px 24px;
+    font-size: 14px;
+    min-width: 150px;
+    height: 40px;
+  }
+  
+  .carousel-nav-button {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .carousel-nav-button.prev {
+    left: 10px;
+  }
+  
+  .carousel-nav-button.next {
+    right: 10px;
+  }
+}

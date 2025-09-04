@@ -1,0 +1,415 @@
+/* ========================================
+   PROMOTIONS SECTION COMPONENT STYLES
+   ======================================== */
+
+/* ========================================
+   CONTAINER PRINCIPAL
+   ======================================== */
+/* Seção principal das promoções */
+.promotions-section {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  background-color: white;
+}
+
+/* Container interno para centralizar conteúdo */
+.promotions-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/* ========================================
+   RESPONSIVIDADE DO CONTAINER
+   ======================================== */
+/* Ajuste de padding para telas médias */
+@media (min-width: 640px) {
+  .promotions-container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+/* Ajuste de padding para telas grandes */
+@media (min-width: 1024px) {
+  .promotions-container {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+/* ========================================
+   HEADER DA SEÇÃO
+   ======================================== */
+/* Container do cabeçalho da seção */
+.promotions-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+/* Título principal da seção */
+.promotions-title {
+  font-size: 36px;
+  margin-bottom: 16px;
+  font-family: 'Alegreya SC', serif;
+  font-weight: 500;
+  color: black;
+}
+
+/* Subtítulo descritivo da seção */
+.promotions-subtitle {
+  font-size: 16px;
+  max-width: 768px;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  color: black;
+}
+
+/* ========================================
+   GRID DE PRODUTOS
+   ======================================== */
+/* Grid responsivo dos produtos */
+.promotions-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  align-items: flex-start;
+  /* Adiciona padding para dar espaço às animações */
+  padding: 16px;
+}
+
+/* Grid de 2 colunas para tablets */
+@media (min-width: 768px) {
+  .promotions-grid {
+    gap: 32px;
+    padding: 20px;
+  }
+}
+
+/* Grid de 3 colunas para desktop */
+@media (min-width: 1024px) {
+  .promotions-grid {
+    gap: 100px;
+    padding: 24px;
+  }
+}
+
+/* ========================================
+   ITEM DO PRODUTO
+   ======================================== */
+/* Container individual de cada produto */
+.product-card {
+  overflow: visible;
+  width: 300px;
+  cursor: pointer;
+  transition: all 0.3s;
+  /* Adiciona padding para dar espaço às animações */
+  padding: 8px;
+  margin: -8px;
+}
+
+/* Hover do item do produto (elevação) */
+.product-card:hover {
+  transform: translateY(-4px);
+}
+
+/* ========================================
+   IMAGEM DO PRODUTO
+   ======================================== */
+/* Container da imagem com posicionamento relativo */
+.product-image-container {
+  position: relative;
+  width: 271px;
+  height: 328px;
+  overflow: hidden;
+}
+
+/* Imagem do produto */
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+/* Hover da imagem (zoom) */
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+/* ========================================
+   BADGE DA CATEGORIA
+   ======================================== */
+/* Badge posicionado sobre a imagem */
+.category-badge {
+  position: absolute;
+  top: 1.5rem;
+  right: 0.75rem;
+  width: 84px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 0.3s;
+  color: #D08700;
+  background-color: #FFF085;
+}
+
+/* Hover do badge */
+.product-card:hover .category-badge {
+  transform: scale(1.05);
+}
+
+/* ========================================
+   CONTEÚDO DO PRODUTO
+   ======================================== */
+/* Container do conteúdo textual do produto */
+.product-info {
+  padding-left: 0;
+  padding-right: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  min-height: 220px;
+  height: auto;
+  align-items: flex-start;
+  /* Previne corte dos elementos animados */
+  overflow: visible;
+}
+
+/* ========================================
+   NOME DO PRODUTO
+   ======================================== */
+/* Título do produto */
+.product-name {
+  margin-bottom: 16px;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  color: black;
+}
+
+/* ========================================
+   DESCRIÇÃO
+   ======================================== */
+/* Descrição do produto com truncamento */
+.product-description {
+  margin-bottom: 12px;
+  flex: 1;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+  font-weight: 200;
+  font-size: 14px;
+  color: #000000;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+  max-height: 2.8em;
+}
+
+/* ========================================
+   CONTAINER DE INFORMAÇÕES
+   ======================================== */
+/* Container das informações do produto (rating, preço) */
+.product-rating {
+  margin-top: 4px;
+}
+
+/* ========================================
+   AVALIAÇÃO
+   ======================================== */
+/* Container da avaliação com estrelas */
+.product-rating {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* Container das estrelas */
+.stars {
+  display: flex;
+
+}
+
+/* Estrela individual */
+.star {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* Estrela preenchida (amarela) */
+.star.filled {
+  color: #FFD333;
+}
+
+/* Estrela vazia (cinza) */
+.star.empty {
+  color: #C4C4C4;
+}
+
+/* Contador de avaliações */
+.reviews-count {
+  margin-left: 4px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  color: #8D8D8D;
+}
+
+/* ========================================
+   PREÇOS
+   ======================================== */
+/* Container dos preços com overflow visible */
+.product-price-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-bottom: 8px;
+  margin-top: 4px;
+  padding-right: 0;
+  padding-left: 0;
+  /* Previne corte dos badges animados */
+  overflow: visible;
+}
+
+/* Wrapper dos preços com overflow visible */
+.price-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  /* Previne corte dos badges animados */
+  overflow: visible;
+  /* Adiciona padding para dar espaço à animação */
+  padding: 4px;
+  margin: -4px;
+}
+
+/* Preço original riscado */
+.product-original-price {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #8D8D8D;
+  text-decoration: line-through;
+  text-decoration-color: #8D8D8D;
+  text-decoration-thickness: 1px;
+}
+
+/* Preço com desconto */
+.product-price {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: #E53935;
+}
+
+/* Badge de desconto */
+.discount-badge {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  color: white;
+  background-color: #E53935;
+  padding: 3px 8px;
+  border-radius: 12px;
+  align-self: flex-start;
+  margin-top: 2px;
+  /* Previne corte durante animação */
+  overflow: visible;
+  transform-origin: center;
+  /* Garante que o badge tenha espaço para balançar */
+  margin: 2px 8px 8px 0;
+  /* Adiciona espaço extra para a animação */
+  min-width: 40px;
+  text-align: center;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  .promotions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    padding: 16px;
+  }
+  
+  .product-card {
+    width: 100%;
+    padding: 6px;
+    margin: -6px;
+  }
+  
+  .product-image-container {
+    width: 100%;
+    height: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .promotions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 12px;
+  }
+  
+  .promotions-title {
+    font-size: 24px;
+  }
+  
+  .product-content {
+    height: auto;
+    min-height: 200px;
+  }
+  
+  .product-name {
+    font-size: 18px;
+  }
+  
+  .product-card {
+    padding: 4px;
+    margin: -4px;
+  }
+}
+
+@media (max-width: 640px) {
+  .promotions-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 8px;
+  }
+  
+  .product-card {
+    max-width: 350px;
+    margin: 0 auto;
+    padding: 6px;
+    margin: -6px;
+  }
+  
+  .product-image-container {
+    height: 250px;
+  }
+  
+  .promotions-header {
+    margin-bottom: 32px;
+  }
+  
+  .promotions-title {
+    font-size: 20px;
+  }
+  
+  .promotions-subtitle {
+    font-size: 14px;
+  }
+}

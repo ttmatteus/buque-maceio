@@ -1,0 +1,379 @@
+/* ========================================
+   FOOTER COMPONENT STYLES
+   ======================================== */
+
+/* ========================================
+   CONTAINER PRINCIPAL
+   ======================================== */
+/* Footer principal */
+.footer {
+  background-color: #000000;
+  color: white;
+  padding: 76px 0 20px 0;
+  font-family: 'Inter', sans-serif;
+  min-height: 556px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Container interno para centralizar conteúdo */
+.footer-container {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 40px 0 40px;
+  display: flex;
+  grid-template-columns: 2fr 2fr 2fr;
+  gap: 40px;
+  column-gap: 20px;
+  align-items: flex-start;
+  min-height: 350px;
+}
+
+.footer-company-support {
+  display: flex;       /* garante que Empresa e Suporte fiquem lado a lado */
+  gap: 40px;           /* distância entre Empresa e Suporte */   /* afasta do logo, move o bloco pra direita */
+}
+
+
+/* Grupo da esquerda (Logo + Empresa + Suporte) */
+.footer-left-group {
+  display: flex;
+  gap: 150px;
+}
+
+/* Grupo da direita (Contato + Redes) vai pro final */
+.footer-right {
+  margin-left: auto; /* empurra pro canto direito */
+  display: flex;
+  gap: 30px;
+  padding-right: 40px; /* adiciona mais espaço extra à direita */
+}
+
+.footer-company-support {
+  display: flex;
+  gap: 150px; /* controla a distância entre Empresa e Suporte */
+}
+
+/* ========================================
+   SEÇÃO ESQUERDA - LOGO E SLOGAN
+   ======================================== */
+/* Container do logo */
+.footer-logo {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+/* Ícone do logo */
+.logo-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.footer-logo-img {
+  height: 61px;
+  width: 60px;
+  object-fit: contain;
+  filter: sepia(100%) saturate(300%) hue-rotate(-10deg) brightness(0.9);
+}
+
+/* Texto do logo */
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Nome da empresa */
+.company-name {
+  letter-spacing: 0.025em;
+  line-height: 1.25;
+  font-size: 36px;
+  color: white;
+  font-family: 'Alegreya SC', serif;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Tagline da empresa */
+.company-tagline {
+  letter-spacing: 0.025em;
+  line-height: 1.25;
+  margin-top: -0.25rem;
+  font-size: 16px;
+  color: #EDEDED;
+  font-family: 'Alegreya SC', serif;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Slogan da empresa */
+.company-slogan {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0;
+  color: white;
+  line-height: 1.4;
+  margin-top: 25px;
+  text-align: left;
+  margin-left: 0;
+}
+
+/* ========================================
+   SEÇÕES CENTRAIS - EMPRESA E SUPORTE
+   ======================================== */
+/* Container das seções */
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Primeira seção (Empresa) com gap específico */
+.footer-section:first-of-type {
+  /* Sem margem - posicionada pelo grid */
+}
+
+/* Segunda seção (Suporte) com gap específico */
+.footer-section:nth-of-type(2) {
+  /* Sem margem - posicionada pelo grid */
+}
+
+/* Terceira seção (Contato) com gap específico */
+.footer-section:nth-of-type(3) {
+  margin-left: 200px;
+}
+
+/* Título das seções */
+.footer-title {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Título do Contato alinhado com os textos abaixo */
+.contato-title {
+  margin-left: 0;
+  text-align: left;
+}
+
+/* Título das redes sociais mais à esquerda */
+.redes-title {
+  margin-left: 0px;
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+/* Lista de links */
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Links individuais */
+.footer-link {
+  color: #EDEDED;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  line-height: 30px;
+  white-space: nowrap;
+}
+
+.footer-link:hover {
+  color: #E8C168;
+}
+
+/* ========================================
+   SEÇÃO DIREITA - CONTATO E REDES SOCIAIS
+   ======================================== */
+/* Container da direita */
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  align-items: flex-start;
+}
+
+/* Lista de contato */
+.footer-contact {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.footer-contact li {
+  color: #EDEDED;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  line-height: 30px;
+  white-space: nowrap;
+}
+
+/* ========================================
+   REDES SOCIAIS
+   ======================================== */
+/* Container dos ícones sociais */
+.social-icons {
+  display: flex;
+  gap: 20px;
+  margin-top: 12px;
+  margin-left: 0px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* Ícones sociais individuais */
+.social-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+}
+
+.social-icon svg {
+  width: 36px;
+  height: 36px;
+}
+
+/* Ícones sem background - apenas os símbolos */
+.social-icon {
+  /* Sem background - apenas os ícones SVG */
+}
+
+/* ========================================
+   COPYRIGHT
+   ======================================== */
+/* Container do copyright */
+.footer-copyright {
+  text-align: center;
+  padding-top: 40px;
+  margin-top: 40px;
+  border-top: 1px solid #262626;
+  padding-left: 0;
+  margin-left: 140px;
+  margin-right: 140px;
+}
+
+.footer-copyright p {
+  color: #737373;
+  font-size: 12px;
+  font-weight: 300;
+  margin: 0 auto;
+  max-width: 300px;
+  text-align: center;
+}
+
+/* ========================================
+   RESPONSIVIDADE
+   ======================================== */
+/* Tablets */
+@media (max-width: 1024px) {
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    padding: 0 24px;
+    min-height: auto;
+  }
+  
+  .footer-left {
+    grid-column: 1 / -1;
+    margin-bottom: 20px;
+  }
+  
+  .footer-right {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .footer {
+    padding: 40px 0 20px 0;
+    min-height: auto;
+  }
+  
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 0 16px;
+    min-height: auto;
+  }
+  
+  .footer-left {
+    text-align: center;
+  }
+  
+  .footer-logo {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .footer-right {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .social-icons {
+    justify-content: center;
+  }
+  
+  .company-name {
+    font-size: 20px;
+  }
+  
+  .footer-title {
+    font-size: 14px;
+  }
+}
+
+/* Mobile pequeno */
+@media (max-width: 480px) {
+  .footer-container {
+    padding: 0 12px;
+  }
+  
+  .social-icons {
+    gap: 12px;
+  }
+  
+  .social-icon {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .social-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+}
