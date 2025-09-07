@@ -31,7 +31,7 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
   const hasActiveSentimentoFilters = () => selectedFilters.some(filter => isSentimentoFilter(filter));
 
   return (
-    <div className="mb-8">
+    <div>
       <div className="flex items-center gap-2.5">
         <span className="filter-label">Filtrar resultados:</span>
         

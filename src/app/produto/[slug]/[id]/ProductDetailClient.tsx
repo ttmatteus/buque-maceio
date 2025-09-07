@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Header, Footer, ProductSplashScreen } from '../../../components';
+import { Header, Footer, ProductSplashScreen, Breadcrumbs } from '../../../components';
+import { useProductHistory } from '../../../hooks';
 import { products } from '../../../data/products';
 import { generateProductSlug } from '../../../utils/slugUtils';
 import '../../../styles/components/ProductPage.css';
 import '../../../styles/components/ProductSplashScreen.css';
+import '../../../styles/components/Breadcrumbs.css';
 import { Product } from '../../../types/product';
 
 export default function ProductDetailClient() {
@@ -14,6 +16,20 @@ export default function ProductDetailClient() {
   const router = useRouter();
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const { history, addToHistory, navigateToProduct, removeFromHistory, clearHistory, setHistory } = useProductHistory();
+
+  // Listener para o botão de voltar do navegador
+  useEffect(() => {
+    const handlePopState = () => {
+      clearHistory();
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [clearHistory]);
 
   useEffect(() => {
     if (params.id && params.slug) {
@@ -50,6 +66,8 @@ export default function ProductDetailClient() {
         
         if (urlSlug === expectedSlug) {
           setProduct(foundProduct);
+          // Adiciona o produto ao histórico
+          addToHistory(foundProduct);
         } else {
           // Slug não corresponde, redirecionar para a URL correta
           router.replace(`/produto/${expectedSlug}/${productId}`);
@@ -64,7 +82,53 @@ export default function ProductDetailClient() {
   }, [params.id, params.slug, router]);
 
   const handleCloseSplash = () => {
+    // Limpa o histórico quando sair do splash screen
+    clearHistory();
     router.push('/produto');
+  };
+
+  const handleNavigateToProduct = (targetProduct: Product) => {
+    // Verifica se o produto alvo já está no histórico
+    const isInHistory = history.some(item => item.product.id === targetProduct.id);
+    
+    if (isInHistory) {
+      // Se o produto já está no histórico, reordena o histórico
+      // Remove o produto do histórico atual e adiciona no início
+      const updatedHistory = history.filter(item => item.product.id !== targetProduct.id);
+      const newHistory = [
+        { product: targetProduct, timestamp: Date.now() },
+        ...updatedHistory
+      ];
+      
+      // Adiciona o produto atual ao histórico (se não for o mesmo produto e não estiver duplicado)
+      if (product && product.id !== targetProduct.id) {
+        // Verifica se o produto atual já está no histórico filtrado
+        const isCurrentProductInFilteredHistory = updatedHistory.some(item => item.product.id === product.id);
+        
+        if (!isCurrentProductInFilteredHistory) {
+          const finalHistory = [
+            { product, timestamp: Date.now() },
+            ...newHistory
+          ].slice(0, 3); // Mantém até 3 produtos
+          
+          // Atualiza o histórico
+          setHistory(finalHistory);
+        } else {
+          setHistory(newHistory.slice(0, 3));
+        }
+      } else {
+        setHistory(newHistory.slice(0, 3));
+      }
+    } else {
+      // Se não está no histórico, adiciona o produto atual ao histórico
+      if (product) {
+        addToHistory(product);
+      }
+    }
+    
+    // Navega para o produto
+    const productUrl = `/produto/${generateProductSlug(targetProduct.name)}/${targetProduct.id}`;
+    router.push(productUrl);
   };
 
   if (isLoading) {
@@ -82,9 +146,29 @@ export default function ProductDetailClient() {
     return null;
   }
 
+  // Criar breadcrumbs baseado no produto e histórico
+  const filteredHistory = history.filter(item => item.product.id !== product.id);
+  const reversedHistory = filteredHistory.slice(0, 2).reverse();
+  
+  const breadcrumbItems = [
+    { label: 'Início', href: '/' },
+    { label: 'Produtos', href: '/produto' },
+    // Adiciona produtos do histórico (excluindo o atual) na ordem cronológica (mais antigo primeiro)
+    ...reversedHistory.map(item => ({
+      label: item.product.name,
+      href: `/produto/${generateProductSlug(item.product.name)}/${item.product.id}`,
+      isRemovable: true,
+      productId: item.product.id,
+      product: item.product // Passa o produto completo
+    })),
+    { label: product.name, isActive: true }
+  ];
+
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
+      
       
       {/* Product Splash Screen sempre visível nesta página */}
       <ProductSplashScreen
@@ -92,6 +176,10 @@ export default function ProductDetailClient() {
         isOpen={true}
         onClose={handleCloseSplash}
         isStandalone={true}
+        breadcrumbItems={breadcrumbItems}
+        onRemoveFromHistory={removeFromHistory}
+        onNavigateToProduct={handleNavigateToProduct}
+        onClearHistory={clearHistory}
       />
       
       <Footer />

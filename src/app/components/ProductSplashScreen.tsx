@@ -1,29 +1,68 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { Product } from '../types/product';
 import { Heart, ShoppingCart } from 'lucide-react';
 import '../styles/components/ProductSplashScreen.css';
-import PromotionsSection from './sections/PromotionsSection';
+import '../styles/components/RelatedProducts.css';
+import { RelatedProducts } from './products';
+import { generateProductUrl } from '../utils/slugUtils';
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+  isActive?: boolean;
+  isRemovable?: boolean;
+  productId?: number;
+  product?: Product;
+}
 
 interface ProductSplashScreenProps {
   product: Product | null;
   isOpen: boolean;
   onClose: () => void;
   isStandalone?: boolean;
+  breadcrumbItems?: BreadcrumbItem[];
+  onRemoveFromHistory?: (productId: number) => void;
+  onNavigateToProduct?: (product: Product) => void;
+  onClearHistory?: () => void;
 }
 
 export default function ProductSplashScreen({ 
   product, 
   isOpen, 
   onClose,
-  isStandalone = false
+  isStandalone = false,
+  breadcrumbItems,
+  onRemoveFromHistory,
+  onNavigateToProduct,
+  onClearHistory
 }: ProductSplashScreenProps) {
+  const router = useRouter();
   const [quantity, setQuantity] = useState(1);
   const [inputValue, setInputValue] = useState('1');
   const [isVisible, setIsVisible] = useState(false);
   const [savedScrollY, setSavedScrollY] = useState(0);
+  const [productSku, setProductSku] = useState<string>('');
+
+  // Função para gerar SKU aleatório
+  const generateRandomSku = (productId: number): string => {
+    const prefixes = ['BQ', 'FL', 'AR', 'BR', 'PR'];
+    const prefix = prefixes[productId % prefixes.length];
+    const randomNumber = Math.floor(Math.random() * 9999) + 1000;
+    const year = new Date().getFullYear().toString().slice(-2);
+    return `${prefix}${year}${randomNumber}`;
+  };
+
+  // Gerar SKU quando o produto mudar
+  useEffect(() => {
+    if (product) {
+      const sku = generateRandomSku(product.id);
+      setProductSku(sku);
+    }
+  }, [product]);
 
   useEffect(() => {
     // Se estiver em modo standalone, não bloqueia o scroll
@@ -213,6 +252,18 @@ export default function ProductSplashScreen({
     // Implementar lógica de carrinho
   };
 
+  const handleRelatedProductClick = (relatedProduct: Product) => {
+    if (onNavigateToProduct) {
+      // Usa a função de navegação que gerencia o histórico
+      onNavigateToProduct(relatedProduct);
+    } else {
+      // Fallback para navegação normal
+      const productUrl = generateProductUrl(relatedProduct.name, relatedProduct.id);
+      onClose();
+      router.push(productUrl);
+    }
+  };
+
   if ((!isOpen && !isStandalone) || !product) {
     return null;
   }
@@ -220,6 +271,48 @@ export default function ProductSplashScreen({
   return (
     <div className={`product-splash-overlay ${isVisible ? 'visible' : ''}`}>
       <div className="product-splash-content">
+                 {/* Breadcrumbs - só mostra se estiver em modo standalone e tiver breadcrumbItems */}
+         {isStandalone && breadcrumbItems && (
+           <div style={{ padding: '16px 20px', backgroundColor: '#f9fafb', borderBottom: '1px solid #e5e7eb', marginBottom: '20px' }}>
+             <nav style={{ maxWidth: '1200px', margin: '0 auto' }}>
+               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', flexWrap: 'wrap' }}>
+                 {breadcrumbItems.map((item, index) => (
+                   <React.Fragment key={index}>
+                     {index > 0 && <span style={{ color: '#6b7280' }}>›</span>}
+                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                       {item.isActive ? (
+                         <span style={{ color: '#1f2937', fontWeight: '500' }}>{item.label}</span>
+                       ) : (
+                         <a 
+                           href={item.href} 
+                           style={{ color: '#6b7280', textDecoration: 'none' }}
+                           onClick={(e) => {
+                             // Se for "Início" ou "Produtos", limpa o histórico
+                             if (item.label === 'Início' || item.label === 'Produtos') {
+                               e.preventDefault();
+                               if (onClearHistory) {
+                                 onClearHistory();
+                               }
+                               window.location.href = item.href || '/';
+                             }
+                             // Se for um produto do histórico, navega para ele
+                             else if (item.product && onNavigateToProduct) {
+                               e.preventDefault();
+                               onNavigateToProduct(item.product);
+                             }
+                           }}
+                         >
+                           {item.label}
+                         </a>
+                       )}
+                     </div>
+                   </React.Fragment>
+                 ))}
+               </div>
+             </nav>
+           </div>
+         )}
+
         {/* Botão de fechar - só mostra se não estiver em modo standalone */}
         {!isStandalone && (
           <button className="close-button" onClick={onClose}>
@@ -243,7 +336,7 @@ export default function ProductSplashScreen({
           {/* Detalhes do produto */}
           <div className="product-details">
             <h1 className="product-title">{product.name}</h1>
-            <p className="product-id">{product.id}</p>
+            <p className="product-sku">{productSku}</p>
             
             {/* Preços */}
             <div className="pricing">
@@ -290,6 +383,10 @@ export default function ProductSplashScreen({
                      +
                    </button>
                  </div>
+                 {/* Texto de estoque */}
+                 <div className="stock-info">
+                   12 em estoque
+                 </div>
                </div>
             </div>
 
@@ -312,11 +409,16 @@ export default function ProductSplashScreen({
 
           {/* Seção de descrição adicional */}
          <div className="additional-description">
+           <div className="description-separator"></div>
+           
            <h3>Descrição do Produto</h3>
            <div className="description-content">
              <p>Um lindo buquê com 12 rosas vermelhas, cuidadosamente selecionadas para transmitir amor, paixão e carinho. Ideal para surpreender e emocionar em momentos especiais, seja para presentear sua pessoa amada, celebrar uma data marcante ou simplesmente demonstrar afeto de forma inesquecível.</p>
            </div>
            
+           <div className="description-separator"></div>
+           
+           <h2 className="info-important-title">Informações importantes</h2>
            <h3>Especificações</h3>
            <div className="description-content">
              <p>Buquê composto por 12 rosas vermelhas de alta qualidade, com folhas verdes complementares. Cada rosa é cuidadosamente selecionada para garantir beleza e durabilidade. O arranjo é embrulhado em papel especial e decorado com fita de cetim.</p>
@@ -326,11 +428,17 @@ export default function ProductSplashScreen({
            <div className="description-content">
              <p>Para manter seu buquê bonito por mais tempo, mantenha em local fresco, longe do sol direto. Troque a água diariamente e corte as hastes em diagonal. Evite colocar próximo a frutas maduras, pois liberam etileno que acelera o envelhecimento das flores.</p>
            </div>
+           
+           <div className="description-separator"></div>
          </div>
 
-         {/* Seção de Promoções */}
-         <div style={{ marginTop: '400px' }}>
-           <PromotionsSection />
+         {/* Seção de Produtos Relacionados */}
+         <div style={{ marginTop: '450px' }}>
+           <RelatedProducts 
+             currentProduct={product}
+             onProductClick={handleRelatedProductClick}
+             maxProducts={4}
+           />
          </div>
       </div>
     </div>

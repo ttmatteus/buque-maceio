@@ -20,3 +20,5 @@ export { default as ProductSplashScreen } from './ProductSplashScreen';
 // Navigation Components
 export { default as Pagination } from './Pagination';
 export { default as FilterSidebar } from './products/FilterSidebar';
+export { default as Breadcrumbs } from './Breadcrumbs';
+export { default as SearchPreview } from './SearchPreview';

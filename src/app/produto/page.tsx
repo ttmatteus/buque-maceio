@@ -2,7 +2,7 @@
 
 import { useEffect, Suspense, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Header, Footer, ProductGrid, ProductFilters, Pagination, PromotionsSection, FilterSidebar } from '../components';
+import { Header, Footer, ProductGrid, ProductFilters, Pagination, FilterSidebar, SortSelector } from '../components';
 import { useProductFilters } from '../hooks/useProductFilters';
 import { Product } from '../types/product';
 import { generateProductUrl } from '../utils/slugUtils';
@@ -14,6 +14,9 @@ import '../styles/components/Header.css';
 function ProductPageContent() {
   const searchParams = useSearchParams();
   const processedSentimentoRef = useRef<string | null>(null);
+  
+  // Obter parâmetro de busca da URL
+  const searchQuery = searchParams.get('search') || '';
 
   const {
     // Estado
@@ -22,6 +25,9 @@ function ProductPageContent() {
     isFilterSidebarOpen,
     selectedFilters,
     openSentimentosSection,
+    sortBy,
+    priceRange,
+    priceRangeData,
     
     // Dados filtrados
     paginatedProducts,
@@ -35,7 +41,9 @@ function ProductPageContent() {
     openFilterSidebar,
     closeFilterSidebar,
     handleSentimentosClick,
-  } = useProductFilters();
+    handleSortChange,
+    handlePriceRangeChange,
+  } = useProductFilters(searchQuery);
 
   const handleProductClick = (product: Product) => {
     // Usa a função utilitária para gerar a URL
@@ -94,19 +102,36 @@ function ProductPageContent() {
             fontSize: '32px',
             fontWeight: '500',
             color: 'black'
-          }}>Flores</h1>
+          }}>
+            {searchQuery ? `Resultados para "${searchQuery}"` : 'Flores'}
+          </h1>
+          {searchQuery && (
+            <p className="text-gray-600 mt-2" style={{ 
+              fontFamily: 'Inter, sans-serif',
+              fontSize: '16px'
+            }}>
+              Encontramos {paginatedProducts.length} produtos para sua busca
+            </p>
+          )}
         </div>
 
-        {/* Filtros por categoria */}
-        <ProductFilters 
-                      categories={["Flores", "Buquês", "Combos", "Sentimentos"]}
-          selectedCategory={selectedCategory}
-          onCategorySelect={handleCategoryChange}
-          onOpenFilters={openFilterSidebar}
-          selectedFilters={selectedFilters}
-          onRemoveSidebarFilter={handleFilterChange}
-          onSentimentosClick={handleSentimentosClick}
-        />
+        {/* Filtros por categoria e ordenação */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+          <ProductFilters 
+            categories={["Flores", "Buquês", "Combos", "Sentimentos"]}
+            selectedCategory={selectedCategory}
+            onCategorySelect={handleCategoryChange}
+            onOpenFilters={openFilterSidebar}
+            selectedFilters={selectedFilters}
+            onRemoveSidebarFilter={handleFilterChange}
+            onSentimentosClick={handleSentimentosClick}
+          />
+          
+          <SortSelector 
+            sortBy={sortBy}
+            onSortChange={handleSortChange}
+          />
+        </div>
 
         {/* Grid de produtos */}
         {paginatedProducts.length === 0 ? (
@@ -140,10 +165,6 @@ function ProductPageContent() {
           />
         )}
 
-        {/* Seção de Promoções */}
-        <div style={{ marginTop: '120px' }}>
-          <PromotionsSection />
-        </div>
       </main>
 
       {/* Sidebar de Filtros */}
@@ -154,6 +175,9 @@ function ProductPageContent() {
         onFilterChange={handleFilterChange}
         onClearAll={handleClearAllFilters}
         openSentimentosSection={openSentimentosSection}
+        priceRange={priceRange}
+        priceRangeData={priceRangeData}
+        onPriceRangeChange={handlePriceRangeChange}
       />
       
       <Footer />

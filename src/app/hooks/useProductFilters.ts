@@ -2,17 +2,33 @@ import { useState, useMemo, useEffect, useCallback } from 'react';
 import { products } from '../data/products';
 import { Product } from '../types/product';
 
-export const useProductFilters = () => {
+export const useProductFilters = (searchQuery?: string) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [isFilterSidebarOpen, setIsFilterSidebarOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [openSentimentosSection, setOpenSentimentosSection] = useState(false);
+  const [sortBy, setSortBy] = useState<string>('relevance'); // 'relevance', 'price-asc', 'price-desc', 'rating-desc'
+  const [priceRange, setPriceRange] = useState<{ min: number; max: number }>({ min: 0, max: 200 });
   
   const itemsPerPage = 12; // 3 linhas × 4 cards = 12 produtos por página
 
   // Lista de filtros de sentimentos válidos
   const sentimentosFilters = useMemo(() => ['Romântico', 'Alegre', 'Elegante', 'Delicado', 'Clássico', 'Luxo', 'Exótico', 'Aromático'], []);
+
+  // Calcular preço mínimo e máximo dos produtos
+  const priceRangeData = useMemo(() => {
+    const prices = products.map(p => p.price);
+    return {
+      min: Math.min(...prices),
+      max: Math.max(...prices)
+    };
+  }, []);
+
+  // Inicializar faixa de preço com os valores reais dos produtos
+  useEffect(() => {
+    setPriceRange(priceRangeData);
+  }, [priceRangeData]);
 
   // Função para verificar se um filtro é de sentimento
   const isSentimentoFilter = useCallback((filter: string) => sentimentosFilters.includes(filter), [sentimentosFilters]);
@@ -160,14 +176,29 @@ export const useProductFilters = () => {
     }
   }, [selectedFilters, selectedCategory, hasActiveSentimentoFilters]);
 
-  // Filtrar produtos por categoria e filtros selecionados
+  // Filtrar produtos por categoria, filtros selecionados e busca por texto
   const filteredProducts = useMemo(() => {
     let filtered: Product[] = products;
+    
+    // Filtrar por busca de texto
+    if (searchQuery && searchQuery.trim()) {
+      const normalizedQuery = searchQuery.toLowerCase().trim();
+      filtered = filtered.filter(product => 
+        product.name.toLowerCase().includes(normalizedQuery) ||
+        product.description.toLowerCase().includes(normalizedQuery) ||
+        product.category.toLowerCase().includes(normalizedQuery)
+      );
+    }
     
     // Filtrar por categoria (ignorar "Sentimentos" pois não é uma categoria real de produtos)
     if (selectedCategory && selectedCategory !== 'Sentimentos') {
       filtered = filtered.filter(product => product.category === selectedCategory);
     }
+    
+    // Filtrar por faixa de preço
+    filtered = filtered.filter(product => 
+      product.price >= priceRange.min && product.price <= priceRange.max
+    );
     
     // Filtrar por filtros selecionados
     if (selectedFilters.length > 0) {
@@ -195,8 +226,28 @@ export const useProductFilters = () => {
       });
     }
     
-    return filtered;
-  }, [selectedCategory, selectedFilters, productMatchesFilter, isSentimentoFilter]);
+    // Aplicar ordenação
+    const sortedProducts = [...filtered].sort((a, b) => {
+      switch (sortBy) {
+        case 'price-asc':
+          return a.price - b.price;
+        case 'price-desc':
+          return b.price - a.price;
+        case 'rating-desc':
+          // Primeiro por rating, depois por número de reviews como critério secundário
+          if (b.rating !== a.rating) {
+            return b.rating - a.rating;
+          }
+          return b.reviews - a.reviews;
+        case 'relevance':
+        default:
+          // Para relevância, manter a ordem original (ou implementar lógica de relevância baseada na busca)
+          return 0;
+      }
+    });
+    
+    return sortedProducts;
+  }, [searchQuery, selectedCategory, selectedFilters, productMatchesFilter, isSentimentoFilter, sortBy, priceRange]);
 
   // Calcular produtos paginados
   const paginatedProducts = useMemo(() => {
@@ -302,6 +353,14 @@ export const useProductFilters = () => {
     setSelectedFilters([]);
     setSelectedCategory(''); // Também desmarca "Sentimentos"
     setCurrentPage(1);
+    
+    // Se há uma busca ativa, limpar a URL de busca também
+    if (searchQuery && searchQuery.trim()) {
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, '', newUrl);
+      // Recarregar a página para limpar a busca
+      window.location.reload();
+    }
   };
 
   const openFilterSidebar = () => {
@@ -320,6 +379,16 @@ export const useProductFilters = () => {
     }
   };
 
+  const handleSortChange = (newSortBy: string) => {
+    setSortBy(newSortBy);
+    setCurrentPage(1); // Voltar para primeira página ao mudar ordenação
+  };
+
+  const handlePriceRangeChange = (min: number, max: number) => {
+    setPriceRange({ min, max });
+    setCurrentPage(1); // Voltar para primeira página ao mudar faixa de preço
+  };
+
   return {
     // Estado
     currentPage,
@@ -327,6 +396,9 @@ export const useProductFilters = () => {
     isFilterSidebarOpen,
     selectedFilters,
     openSentimentosSection,
+    sortBy,
+    priceRange,
+    priceRangeData,
     
     // Dados filtrados
     filteredProducts,
@@ -342,5 +414,7 @@ export const useProductFilters = () => {
     openFilterSidebar,
     closeFilterSidebar,
     handleSentimentosClick,
+    handleSortChange,
+    handlePriceRangeChange,
   };
 };

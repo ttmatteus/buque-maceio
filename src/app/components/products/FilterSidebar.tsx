@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { IoClose, IoAdd, IoRemove } from 'react-icons/io5';
 import '../../styles/components/FilterSidebar.css';
-import React from 'react'; 
+import React from 'react';
+import PriceSlider from './PriceSlider'; 
 
 interface FilterSidebarProps {
   isOpen: boolean;
@@ -12,6 +13,9 @@ interface FilterSidebarProps {
   onFilterChange: (filter: string) => void;
   onClearAll: () => void;
   openSentimentosSection?: boolean;
+  priceRange?: { min: number; max: number };
+  priceRangeData?: { min: number; max: number };
+  onPriceRangeChange?: (min: number, max: number) => void;
 }
 
 interface FilterSection {
@@ -33,7 +37,10 @@ export default function FilterSidebar({
   selectedFilters, 
   onFilterChange, 
   onClearAll,
-  openSentimentosSection 
+  openSentimentosSection,
+  priceRange,
+  priceRangeData,
+  onPriceRangeChange
 }: FilterSidebarProps) {
   const [isClosing, setIsClosing] = useState(false);
   
@@ -180,8 +187,43 @@ export default function FilterSidebar({
                 <div className={`filter-sidebar-section-content ${section.isExpanded ? 'expanded' : ''}`}>
                   {section.isExpanded && (
                     <div className="space-y-2">
-                      {/* Opções diretas da seção */}
-                      {section.options.length > 0 && section.options.map((option) => (
+                      {/* Seção de preço com checkboxes e slider */}
+                      {section.id === 'price' && (
+                        <div className="space-y-4">
+                          {/* Checkboxes de faixas predefinidas */}
+                          <div className="space-y-2">
+                            <h4 className="filter-sidebar-section-title mb-2">Faixas de Preço</h4>
+                            {section.options.map((option) => (
+                              <label key={option} className="flex items-center cursor-pointer">
+                                <input
+                                  type="checkbox"
+                                  checked={isFilterSelected(option)}
+                                  onChange={() => onFilterChange(option)}
+                                  className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+                                />
+                                <span className="ml-3 text-gray-700 filter-sidebar-option">{option}</span>
+                              </label>
+                            ))}
+                          </div>
+                          
+                          {/* Separador */}
+                          <div className="border-t border-gray-200 pt-4">
+                            <h4 className="filter-sidebar-section-title mb-2">Faixa Personalizada</h4>
+                            {priceRange && priceRangeData && onPriceRangeChange && (
+                              <PriceSlider
+                                minPrice={priceRangeData.min}
+                                maxPrice={priceRangeData.max}
+                                selectedMinPrice={priceRange.min}
+                                selectedMaxPrice={priceRange.max}
+                                onPriceChange={onPriceRangeChange}
+                              />
+                            )}
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* Opções diretas da seção (para outras seções) */}
+                      {section.id !== 'price' && section.options.length > 0 && section.options.map((option) => (
                         <label key={option} className="flex items-center cursor-pointer">
                           <input
                             type="checkbox"
