@@ -10,7 +10,7 @@
   background-color: #F0F1F2;
   border-bottom: 1px solid #e5e7eb;
   position: relative;
-  z-index: 9998;
+  z-index: 9999999;
 }
 
 /* Container interno para centralizar conteúdo */
@@ -225,7 +225,7 @@
 .header-bottom {
   background-color: black;
   position: relative;
-  z-index: 9998;
+  z-index: 9999;
 }
 
 /* Container interno da navegação */
@@ -274,7 +274,7 @@
 /* Container do dropdown */
 .header-nav-dropdown {
   position: relative;
-  z-index: 99999;
+  z-index: 999999;
 }
 
 /* Dropdown de sentimentos */
@@ -289,7 +289,7 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   padding: 12px 0;
   min-width: 150px;
-  z-index: 99999;
+  z-index: 999999;
   margin-top: 0;
   overflow: hidden;
 }
@@ -331,6 +331,103 @@
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
+
+/* ========================================
+   DROPDOWN DO PERFIL DO USUÁRIO
+   ======================================== */
+/* Container do dropdown do perfil */
+.user-profile-dropdown {
+  position: fixed;
+  top: 60px;
+  right: 125px;
+  background-color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 2px 6px 4px 0px rgba(0, 0, 0, 0.25);
+  padding: 13px 13px;
+  width: 170px;
+  height: 190px;
+  z-index: 9999999;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Header com nome do usuário */
+.user-profile-header {
+  padding: 0;
+  margin-bottom: -8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #000000;
+  background-color: #FFFFFF;
+  border-bottom: none;
+}
+
+/* Separador */
+.user-profile-separator {
+  height: 1px;
+  background-color: #E9E9E9;
+  margin: 0;
+  width: 100%;
+  opacity: 1;
+  flex-shrink: 0;
+}
+
+/* Container das opções */
+.user-profile-options {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Opções do menu */
+.user-profile-option {
+  display: block;
+  width: 100%;
+  padding: 0;
+  text-align: left;
+  background: none;
+  border: none;
+  color: #5E5E5E;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin: 0;
+}
+
+/* Hover das opções */
+.user-profile-option:hover {
+  color: #374151;
+}
+
+/* Botão de sair */
+.user-profile-logout {
+  display: block;
+  width: 100%;
+  padding: 0;
+  text-align: left;
+  background: none;
+  border: none;
+  color: #5E5E5E;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin: 0;
+}
+
+/* Hover do botão de sair */
+.user-profile-logout:hover {
+  color: #DC2626;
+}
+
 
 /* ========================================
    RESPONSIVIDADE

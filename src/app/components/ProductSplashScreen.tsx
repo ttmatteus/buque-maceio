@@ -4,11 +4,12 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Product } from '../types/product';
-import { Heart, ShoppingCart } from 'lucide-react';
+import { Heart, ShoppingBasket } from 'lucide-react';
 import '../styles/components/ProductSplashScreen.css';
 import '../styles/components/RelatedProducts.css';
 import { RelatedProducts } from './products';
 import { generateProductUrl } from '../utils/slugUtils';
+import { Header } from './layout';
 
 interface BreadcrumbItem {
   label: string;
@@ -30,9 +31,9 @@ interface ProductSplashScreenProps {
   onClearHistory?: () => void;
 }
 
-export default function ProductSplashScreen({ 
-  product, 
-  isOpen, 
+export default function ProductSplashScreen({
+  product,
+  isOpen,
   onClose,
   isStandalone = false,
   breadcrumbItems,
@@ -46,6 +47,10 @@ export default function ProductSplashScreen({
   const [isVisible, setIsVisible] = useState(false);
   const [savedScrollY, setSavedScrollY] = useState(0);
   const [productSku, setProductSku] = useState<string>('');
+  const [isFavorite, setIsFavorite] = useState(false);
+  
+  // Estoque disponível
+  const stockAvailable = 12;
 
   // Função para gerar SKU aleatório
   const generateRandomSku = (productId: number): string => {
@@ -192,7 +197,7 @@ export default function ProductSplashScreen({
   }, [isOpen, isVisible, savedScrollY, isStandalone]);
 
   const handleQuantityChange = (increment: boolean) => {
-    if (increment && quantity < 99) {
+    if (increment && quantity < stockAvailable) {
       const newQuantity = quantity + 1;
       setQuantity(newQuantity);
       setInputValue(newQuantity.toString());
@@ -222,13 +227,13 @@ export default function ProductSplashScreen({
     
     const numValue = parseInt(value);
     
-    // Só aceita valores válidos entre 1-99
-    if (!isNaN(numValue) && numValue >= 1 && numValue <= 99) {
+    // Só aceita valores válidos entre 1 e o estoque disponível
+    if (!isNaN(numValue) && numValue >= 1 && numValue <= stockAvailable) {
       setInputValue(value);
       setQuantity(numValue);
     }
-    // Se for maior que 99, não atualiza o input
-    else if (numValue > 99) {
+    // Se for maior que o estoque, não atualiza o input
+    else if (numValue > stockAvailable) {
       return; 
     }
     // Para outros valores inválidos, permite digitação mas não atualiza quantidade
@@ -245,7 +250,7 @@ export default function ProductSplashScreen({
   };
 
   const handleAddToWishlist = () => {
-    // Implementar lógica de lista de desejos
+    setIsFavorite(!isFavorite);
   };
 
   const handleAddToCart = () => {
@@ -271,47 +276,8 @@ export default function ProductSplashScreen({
   return (
     <div className={`product-splash-overlay ${isVisible ? 'visible' : ''}`}>
       <div className="product-splash-content">
-                 {/* Breadcrumbs - só mostra se estiver em modo standalone e tiver breadcrumbItems */}
-         {isStandalone && breadcrumbItems && (
-           <div style={{ padding: '16px 20px', backgroundColor: '#f9fafb', borderBottom: '1px solid #e5e7eb', marginBottom: '20px' }}>
-             <nav style={{ maxWidth: '1200px', margin: '0 auto' }}>
-               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', flexWrap: 'wrap' }}>
-                 {breadcrumbItems.map((item, index) => (
-                   <React.Fragment key={index}>
-                     {index > 0 && <span style={{ color: '#6b7280' }}>›</span>}
-                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                       {item.isActive ? (
-                         <span style={{ color: '#1f2937', fontWeight: '500' }}>{item.label}</span>
-                       ) : (
-                         <a 
-                           href={item.href} 
-                           style={{ color: '#6b7280', textDecoration: 'none' }}
-                           onClick={(e) => {
-                             // Se for "Início" ou "Produtos", limpa o histórico
-                             if (item.label === 'Início' || item.label === 'Produtos') {
-                               e.preventDefault();
-                               if (onClearHistory) {
-                                 onClearHistory();
-                               }
-                               window.location.href = item.href || '/';
-                             }
-                             // Se for um produto do histórico, navega para ele
-                             else if (item.product && onNavigateToProduct) {
-                               e.preventDefault();
-                               onNavigateToProduct(item.product);
-                             }
-                           }}
-                         >
-                           {item.label}
-                         </a>
-                       )}
-                     </div>
-                   </React.Fragment>
-                 ))}
-               </div>
-             </nav>
-           </div>
-         )}
+        {/* Header - só mostra se estiver em modo standalone */}
+        {isStandalone && <Header />}
 
         {/* Botão de fechar - só mostra se não estiver em modo standalone */}
         {!isStandalone && (
@@ -321,7 +287,14 @@ export default function ProductSplashScreen({
         )}
 
         {/* Conteúdo principal */}
-        <div className="product-splash-main">
+        <div className="product-splash-main" style={{ 
+          marginTop: isStandalone ? '241px' : '0',
+          maxWidth: isStandalone ? '1400px' : undefined,
+          marginLeft: isStandalone ? 'auto' : undefined,
+          marginRight: isStandalone ? 'auto' : undefined,
+          paddingLeft: isStandalone ? '20px' : undefined,
+          paddingRight: isStandalone ? '20px' : undefined
+        }}>
           {/* Imagem do produto */}
           <div className="product-image-container">
             <Image 
@@ -364,28 +337,28 @@ export default function ProductSplashScreen({
                    >
                      −
                    </button>
-                   <input 
-                     type="text"
-                     inputMode="numeric"
-                     pattern="[0-9]*"
-                     value={inputValue} 
-                     onChange={(e) => handleInputChange(e.target.value)}
-                     className="quantity-input"
-                     min="1"
-                     max="99"
-                   />
-                   <button 
-                     className="quantity-btn"
-                     style={{ right: 12, top: -2 }}
-                     onClick={() => handleQuantityChange(true)}
-                     disabled={quantity >= 99}
+                  <input 
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    value={inputValue} 
+                    onChange={(e) => handleInputChange(e.target.value)}
+                    className="quantity-input"
+                    min="1"
+                    max={stockAvailable}
+                  />
+                  <button 
+                    className="quantity-btn"
+                    style={{ right: 12, top: -2 }}
+                    onClick={() => handleQuantityChange(true)}
+                    disabled={quantity >= stockAvailable}
                    >
                      +
                    </button>
                  </div>
                  {/* Texto de estoque */}
                  <div className="stock-info">
-                   12 em estoque
+                   {stockAvailable} em estoque
                  </div>
                </div>
             </div>
@@ -396,11 +369,21 @@ export default function ProductSplashScreen({
                 Comprar Agora
               </button>
                              <div className="secondary-actions">
-                 <button className="action-btn wishlist" onClick={handleAddToWishlist}>
-                   <Heart size={16} />
+                 <button 
+                   className="action-btn wishlist" 
+                   onClick={handleAddToWishlist}
+                   style={{
+                     border: isFavorite ? '1px solid #FF5353' : undefined
+                   }}
+                 >
+                   <Heart 
+                     size={16} 
+                     fill={isFavorite ? '#FF5353' : 'none'}
+                     stroke={isFavorite ? '#FA6338' : 'currentColor'}
+                   />
                  </button>
                  <button className="action-btn cart" onClick={handleAddToCart}>
-                   <ShoppingCart size={16} />
+                   <ShoppingBasket size={16} />
                  </button>
                </div>
             </div>
@@ -408,7 +391,13 @@ export default function ProductSplashScreen({
         </div>
 
           {/* Seção de descrição adicional */}
-         <div className="additional-description">
+         <div className="additional-description" style={{
+           maxWidth: isStandalone ? '1400px' : undefined,
+           marginLeft: isStandalone ? 'auto' : undefined,
+           marginRight: isStandalone ? 'auto' : undefined,
+           paddingLeft: isStandalone ? '20px' : undefined,
+           paddingRight: isStandalone ? '20px' : undefined
+         }}>
            <div className="description-separator"></div>
            
            <h3>Descrição do Produto</h3>
@@ -433,7 +422,14 @@ export default function ProductSplashScreen({
          </div>
 
          {/* Seção de Produtos Relacionados */}
-         <div style={{ marginTop: '450px' }}>
+         <div style={{ 
+           marginTop: '450px',
+           maxWidth: isStandalone ? '1400px' : undefined,
+           marginLeft: isStandalone ? 'auto' : undefined,
+           marginRight: isStandalone ? 'auto' : undefined,
+           paddingLeft: isStandalone ? '20px' : undefined,
+           paddingRight: isStandalone ? '20px' : undefined
+         }}>
            <RelatedProducts 
              currentProduct={product}
              onProductClick={handleRelatedProductClick}

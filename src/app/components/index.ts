@@ -22,3 +22,5 @@ export { default as Pagination } from './Pagination';
 export { default as FilterSidebar } from './products/FilterSidebar';
 export { default as Breadcrumbs } from './Breadcrumbs';
 export { default as SearchPreview } from './SearchPreview';
+export { default as UserProfileDropdown } from './UserProfileDropdown';
+export { default as ProfileShape } from './ProfileShape';

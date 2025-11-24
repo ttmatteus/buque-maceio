@@ -7,15 +7,19 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useProductSearch } from '../../hooks';
 import { SearchPreview } from '../';
+import UserProfileDropdown from '../UserProfileDropdown';
+import ProfileShape from '../ProfileShape';
 import { Product } from '../../types/product';
 import { generateProductSlug } from '../../utils/slugUtils';
 
-// header massa 
+// tt: cuidado com o dropdown se mexer vai conflitar 
 const Header: React.FC = () => {
   const [openSentimentosDropdown, setOpenSentimentosDropdown] = useState(false);
+  const [openUserProfileDropdown, setOpenUserProfileDropdown] = useState(false);
+  const [showProfileShape, setShowProfileShape] = useState(false);
   const router = useRouter();
   
-  // Hook de busca
+  // jm: ou tt verifica isso please, tem coisa errada aqui
   const {
     searchQuery,
     searchResults,
@@ -25,7 +29,7 @@ const Header: React.FC = () => {
     closeSearch
   } = useProductSearch();
   
-  // Lista de sentimentos disponíveis
+
   const sentimentos = ['Romântico', 'Alegre', 'Elegante', 'Delicado', 'Clássico', 'Luxo', 'Exótico', 'Aromático'];
   
 
@@ -35,7 +39,6 @@ const Header: React.FC = () => {
     if (element) {
       let offset = 120; 
       
-      // Offset maior para a seção de buquês
       if (sectionId === 'buques') {
         offset = 50; 
       }
@@ -55,6 +58,16 @@ const Header: React.FC = () => {
     // Redireciona para a pagina de produtos com o filtro de sentimento
     const url = `/produto?sentimento=${encodeURIComponent(sentimento)}`;
     router.push(url);
+  };
+
+  const handleUserProfileClick = () => {
+    // Desabilitar dropdown por enquanto, mostrar shape
+    setShowProfileShape(!showProfileShape);
+    setOpenUserProfileDropdown(false);
+    // Fecha o dropdown de sentimentos se estiver aberto
+    if (openSentimentosDropdown) {
+      setOpenSentimentosDropdown(false);
+    }
   };
 
   // Função para lidar com clique em produto da busca
@@ -111,7 +124,7 @@ const Header: React.FC = () => {
             </div>
 
             {/* barra de pesquisa centralizada */}
-            <div className="header-search">
+            <div className="header-search" style={{ maxWidth: '800px', marginLeft: 'auto', marginRight: 'auto', transform: 'translateX(-270px)' }}>
               <form onSubmit={handleSearchSubmit} className="search-container">
                 <div className="search-icon">
                   <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -120,7 +133,7 @@ const Header: React.FC = () => {
                 </div>
                 <input
                   type="text"
-                  placeholder="Pesquisar tipos de flores, compos..."
+                  placeholder="Pesquisar tipos de flores, combos..."
                   className="search-input"
                   value={searchQuery}
                   onChange={handleSearchChange}
@@ -141,20 +154,30 @@ const Header: React.FC = () => {
 
             {/* lado direito: ícones personalizados do usuário */}
             <div className="header-actions">
-              <motion.button 
-                className="header-button"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-              >
-                <Image
-                  src="/images/icons/Frame.svg"
-                  alt="Perfil do usuário"
-                  width={24}
-                  height={24}
-                  className="w-6 h-6"
+              <div className="header-nav-dropdown">
+                <motion.button 
+                  className="header-button"
+                  onClick={handleUserProfileClick}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Image
+                    src="/images/icons/Frame.svg"
+                    alt="Perfil do usuário"
+                    width={24}
+                    height={24}
+                    className="w-6 h-6"
+                  />
+                </motion.button>
+                
+                {/* Dropdown do Perfil do Usuário */}
+                <UserProfileDropdown
+                  isOpen={openUserProfileDropdown}
+                  onClose={() => setOpenUserProfileDropdown(false)}
+                  userName="Nome do Usuário"
                 />
-              </motion.button>
+              </div>
               <motion.button 
                 className="header-button favorites"
                 whileHover={{ scale: 1.1 }}
@@ -280,6 +303,12 @@ const Header: React.FC = () => {
         onClose={closeSearch}
         onProductClick={handleProductClick}
         onSuggestionClick={handleSuggestionClick}
+      />
+
+      {/* ProfileShape - aparece quando clica no ícone de perfil */}
+      <ProfileShape
+        isVisible={showProfileShape}
+        onClose={() => setShowProfileShape(false)}
       />
     </div>
   );

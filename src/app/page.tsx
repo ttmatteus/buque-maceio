@@ -34,6 +34,7 @@ export default function Home() {
         <Carousel />
       </div>
       
+
       {/* seção de Categorias - Lazy Loading */}
       <div id="tipos">
         <LazySection threshold={0.2}>
