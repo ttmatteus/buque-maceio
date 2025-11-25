@@ -1,5 +1,7 @@
 "use client";
 
+import { MoreHorizontal, ChevronLeft, ChevronRight } from 'lucide-react';
+
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
@@ -28,12 +30,9 @@ export default function Pagination({
           disabled={currentPage === 1}
           className="pagination-button pagination-prev"
         >
-          <span className="pagination-chevron">‹</span>
+          <ChevronLeft size={16} />
           <span className="pagination-text">Anterior</span>
         </button>
-
-        {/* Separador */}
-        <div className="pagination-separator"></div>
 
         {/* Números das páginas */}
         <div className="pagination-pages">
@@ -47,23 +46,19 @@ export default function Pagination({
             </button>
           ))}
           
-          {/* Elipsis se houver mais páginas */}
-          {totalPages > 3 && (
-            <span className="pagination-ellipsis">...</span>
-          )}
+          {/* Ícone Ellipsis após a última página */}
+          <MoreHorizontal size={16} style={{ marginLeft: '8px' }} />
         </div>
-
-        {/* Separador */}
-        <div className="pagination-separator"></div>
 
         {/* Botão Próximo */}
         <button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
           className="pagination-button pagination-next"
+          style={{ marginLeft: '16px' }}
         >
           <span className="pagination-text">Próximo</span>
-          <span className="pagination-chevron">›</span>
+          <ChevronRight size={16} />
         </button>
       </div>
     </div>

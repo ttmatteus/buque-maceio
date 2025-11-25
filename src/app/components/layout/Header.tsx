@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { FaChevronDown } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useProductSearch } from '../../hooks';
 import { SearchPreview } from '../';
 import UserProfileDropdown from '../UserProfileDropdown';
@@ -17,7 +17,36 @@ const Header: React.FC = () => {
   const [openSentimentosDropdown, setOpenSentimentosDropdown] = useState(false);
   const [openUserProfileDropdown, setOpenUserProfileDropdown] = useState(false);
   const [showProfileShape, setShowProfileShape] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState<string | null>(null);
   const router = useRouter();
+  const pathname = usePathname();
+
+  // Verifica se está logado ao carregar
+  useEffect(() => {
+    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const name = localStorage.getItem('userName');
+    setIsLoggedIn(loggedIn);
+    setUserName(name);
+  }, []);
+
+  // Fecha dropdown ao clicar fora
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.header-nav-dropdown')) {
+        setOpenUserProfileDropdown(false);
+      }
+    };
+
+    if (openUserProfileDropdown) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [openUserProfileDropdown]);
   
   // jm: ou tt verifica isso please, tem coisa errada aqui
   const {
@@ -61,13 +90,27 @@ const Header: React.FC = () => {
   };
 
   const handleUserProfileClick = () => {
-    // Desabilitar dropdown por enquanto, mostrar shape
-    setShowProfileShape(!showProfileShape);
-    setOpenUserProfileDropdown(false);
+    if (isLoggedIn) {
+      // Se estiver logado, mostra dropdown com nome e opção de sair
+      setOpenUserProfileDropdown(!openUserProfileDropdown);
+    } else {
+      // Se não estiver logado, mostra modal de login
+      setShowProfileShape(!showProfileShape);
+    }
     // Fecha o dropdown de sentimentos se estiver aberto
     if (openSentimentosDropdown) {
       setOpenSentimentosDropdown(false);
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userEmail');
+    setIsLoggedIn(false);
+    setUserName(null);
+    setOpenUserProfileDropdown(false);
+    window.location.reload();
   };
 
   // Função para lidar com clique em produto da busca
@@ -172,8 +215,147 @@ const Header: React.FC = () => {
                 </motion.button>
                 
                 {/* Dropdown do Perfil do Usuário */}
+                {isLoggedIn && openUserProfileDropdown && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    style={{
+                      position: 'absolute',
+                      top: '100%',
+                      right: '0',
+                      marginTop: '8px',
+                      backgroundColor: '#FFFFFF',
+                      border: '1px solid #E5E5E5',
+                      borderRadius: '8px',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                      width: '177px',
+                      height: '214px',
+                      padding: '0',
+                      zIndex: 1000
+                    }}
+                  >
+                    {/* Nome do Usuário */}
+                    <div style={{
+                      padding: '12px 16px',
+                      fontFamily: 'Inter, sans-serif',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      color: '#000000'
+                    }}>
+                      {userName}
+                    </div>
+                    
+                    {/* Linha divisória */}
+                    <div style={{
+                      height: '1px',
+                      backgroundColor: '#E5E5E5',
+                      width: '144px',
+                      marginLeft: '16px'
+                    }}></div>
+                    
+                    {/* Menu Items */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '14px', marginBottom: '14px' }}>
+                      <div style={{
+                        padding: '0 16px',
+                        fontFamily: 'Inter, sans-serif',
+                        fontSize: '14px',
+                        fontWeight: '400',
+                        color: '#666666',
+                        cursor: 'pointer'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F5F5F5'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                      onClick={() => {
+                        setOpenUserProfileDropdown(false);
+                        if (pathname === '/perfil') {
+                          // Se já está na página de perfil, apenas limpa o estado de favoritos
+                          localStorage.removeItem('openFavoritos');
+                          window.dispatchEvent(new Event('showProfile'));
+                        } else {
+                          // Se não está, navega para a página
+                          localStorage.removeItem('openFavoritos');
+                          router.push('/perfil');
+                        }
+                      }}
+                      >
+                        Meu Perfil
+                      </div>
+                      <div style={{
+                        padding: '0 16px',
+                        fontFamily: 'Inter, sans-serif',
+                        fontSize: '14px',
+                        fontWeight: '400',
+                        color: '#666666',
+                        cursor: 'pointer'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F5F5F5'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                      onClick={() => {
+                        setOpenUserProfileDropdown(false);
+                        if (pathname === '/perfil') {
+                          // Se já está na página de perfil, apenas mostra favoritos
+                          localStorage.setItem('openFavoritos', 'true');
+                          window.dispatchEvent(new Event('showFavoritos'));
+                        } else {
+                          // Se não está, navega e mostra favoritos
+                          localStorage.setItem('openFavoritos', 'true');
+                          router.push('/perfil');
+                        }
+                      }}
+                      >
+                        Meus Favoritos
+                      </div>
+                      <div style={{
+                        padding: '0 16px',
+                        fontFamily: 'Inter, sans-serif',
+                        fontSize: '14px',
+                        fontWeight: '400',
+                        color: '#666666',
+                        cursor: 'pointer'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F5F5F5'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                      >
+                        Meu Pedidos
+                      </div>
+                    </div>
+                    
+                    {/* Linha divisória */}
+                    <div style={{
+                      height: '1px',
+                      backgroundColor: '#E5E5E5',
+                      width: '144px',
+                      marginLeft: '16px'
+                    }}></div>
+                    
+                    {/* Botão Sair */}
+                    <button
+                      onClick={handleLogout}
+                      style={{
+                        width: '100%',
+                        padding: '0 16px',
+                        marginTop: '10px',
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        fontFamily: 'Inter, sans-serif',
+                        fontSize: '14px',
+                        fontWeight: '400',
+                        color: '#666666',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        transition: 'background-color 0.2s'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F5F5F5'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                    >
+                      Sair
+                    </button>
+                  </motion.div>
+                )}
+                
                 <UserProfileDropdown
-                  isOpen={openUserProfileDropdown}
+                  isOpen={openUserProfileDropdown && !isLoggedIn}
                   onClose={() => setOpenUserProfileDropdown(false)}
                   userName="Nome do Usuário"
                 />
@@ -183,6 +365,17 @@ const Header: React.FC = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.2 }}
+                onClick={() => {
+                  if (pathname === '/perfil') {
+                    // Se já está na página de perfil, apenas mostra favoritos
+                    localStorage.setItem('openFavoritos', 'true');
+                    window.dispatchEvent(new Event('showFavoritos'));
+                  } else {
+                    // Se não está, navega e mostra favoritos
+                    localStorage.setItem('openFavoritos', 'true');
+                    router.push('/perfil');
+                  }
+                }}
               >
                 <motion.div
                   whileHover={{ filter: 'brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%)' }}

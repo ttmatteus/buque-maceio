@@ -13,6 +13,8 @@ interface ProfileShapeProps {
 export default function ProfileShape({ isVisible, onClose }: ProfileShapeProps) {
   const [isSignUp, setIsSignUp] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   
   // Detecta se é tela pequena
   useEffect(() => {
@@ -21,6 +23,31 @@ export default function ProfileShape({ isVisible, onClose }: ProfileShapeProps) 
     window.addEventListener('resize', checkScreen);
     return () => window.removeEventListener('resize', checkScreen);
   }, []);
+
+  const handleLogin = (e?: React.FormEvent) => {
+    if (e) {
+      e.preventDefault();
+    }
+    
+    // Conta padrão de teste: admin / admin123
+    if (email === 'admin' && password === 'admin123') {
+      // Salva no localStorage
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userName', 'admin');
+      localStorage.setItem('userEmail', email);
+      // Fecha o modal e recarrega para atualizar o header
+      onClose();
+      window.location.reload();
+    } else {
+      // Mostra mensagem de erro se as credenciais estiverem incorretas
+      alert('Credenciais inválidas! Use: admin / admin123');
+    }
+  };
+
+  const handleSignUp = () => {
+    // Lógica de cadastro aqui
+    alert('Funcionalidade de cadastro em desenvolvimento!');
+  };
   
   if (!isVisible) return null;
 
@@ -28,7 +55,6 @@ export default function ProfileShape({ isVisible, onClose }: ProfileShapeProps) 
     <>
       {/* Overlay com gradiente transparente */}
       <motion.div 
-        className="fixed inset-0 z-40"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -36,7 +62,12 @@ export default function ProfileShape({ isVisible, onClose }: ProfileShapeProps) 
         style={{
           background: 'linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 100%)',
           backdropFilter: 'blur(3px)',
-          position: 'fixed' as const
+          position: 'fixed' as const,
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 100000
         }}
         onClick={onClose}
       />
@@ -48,7 +79,7 @@ export default function ProfileShape({ isVisible, onClose }: ProfileShapeProps) 
           left: '50%',
           top: isSmallScreen ? '55%' : '192px',
           transform: isSmallScreen ? 'translate(-50%, -50%)' : 'translateX(-50%)',
-          zIndex: 9999
+          zIndex: 100001
         }}
       >
         {/* Card que acompanha o scroll */}
@@ -87,7 +118,8 @@ export default function ProfileShape({ isVisible, onClose }: ProfileShapeProps) 
             color: '#BEBEBE',
             fontSize: '32px',
             fontWeight: '300',
-            lineHeight: '1'
+            lineHeight: '1',
+            zIndex: 100002
           }}
           aria-label="Fechar"
         >
@@ -192,7 +224,15 @@ export default function ProfileShape({ isVisible, onClose }: ProfileShapeProps) 
           </div>
 
           {/* Card de formulário - 128px do topo do card interno principal */}
-          <div
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!isSignUp) {
+                handleLogin(e);
+              } else {
+                handleSignUp();
+              }
+            }}
             style={{
               width: '320px',
               minHeight: '226px',
@@ -218,8 +258,10 @@ export default function ProfileShape({ isVisible, onClose }: ProfileShapeProps) 
                 Email
               </label>
               <input
-                type="email"
+                type="text"
                 placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 style={{
                   width: '100%',
                   height: '48px',
@@ -250,6 +292,13 @@ export default function ProfileShape({ isVisible, onClose }: ProfileShapeProps) 
               <input
                 type="password"
                 placeholder="Senha"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter' && !isSignUp) {
+                    handleLogin();
+                  }
+                }}
                 style={{
                   width: '100%',
                   height: '48px',
@@ -268,6 +317,7 @@ export default function ProfileShape({ isVisible, onClose }: ProfileShapeProps) 
 
              {/* Botão Entrar/Criar conta */}
              <motion.button
+               type="submit"
                whileHover={{ scale: 1.02 }}
                whileTap={{ scale: 0.98 }}
                transition={{ duration: 0.2 }}
@@ -378,7 +428,7 @@ export default function ProfileShape({ isVisible, onClose }: ProfileShapeProps) 
                />
                Entrar com Google
              </motion.button>
-           </div>
+           </form>
         </div>
         </motion.div>
       </div>

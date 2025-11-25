@@ -10,6 +10,8 @@ import '../styles/components/RelatedProducts.css';
 import { RelatedProducts } from './products';
 import { generateProductUrl } from '../utils/slugUtils';
 import { Header } from './layout';
+import ProfileShape from './ProfileShape';
+import { isFavorite as checkIsFavorite, toggleFavorite, isUserLoggedIn } from '../utils/favoritesUtils';
 
 interface BreadcrumbItem {
   label: string;
@@ -48,6 +50,7 @@ export default function ProductSplashScreen({
   const [savedScrollY, setSavedScrollY] = useState(0);
   const [productSku, setProductSku] = useState<string>('');
   const [isFavorite, setIsFavorite] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   
   // Estoque disponível
   const stockAvailable = 12;
@@ -67,6 +70,44 @@ export default function ProductSplashScreen({
       const sku = generateRandomSku(product.id);
       setProductSku(sku);
     }
+  }, [product]);
+
+  // Verificar se o produto está favoritado ao carregar
+  useEffect(() => {
+    if (product) {
+      setIsFavorite(checkIsFavorite(product.id));
+    }
+  }, [product]);
+
+  // Atualizar estado do favorito quando o login mudar ou quando o modal fechar
+  useEffect(() => {
+    if (product && !showLoginModal) {
+      setIsFavorite(checkIsFavorite(product.id));
+    }
+  }, [product, showLoginModal]);
+
+  // Listener para atualizar favorito quando login acontecer ou favoritos mudarem
+  useEffect(() => {
+    const handleFavoritesUpdate = () => {
+      if (product) {
+        setIsFavorite(checkIsFavorite(product.id));
+      }
+    };
+
+    // Verifica quando o login acontece (mudança no localStorage)
+    const handleStorageChange = () => {
+      if (product) {
+        setIsFavorite(checkIsFavorite(product.id));
+      }
+    };
+
+    window.addEventListener('favoritesUpdated', handleFavoritesUpdate);
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('favoritesUpdated', handleFavoritesUpdate);
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, [product]);
 
   useEffect(() => {
@@ -250,7 +291,18 @@ export default function ProductSplashScreen({
   };
 
   const handleAddToWishlist = () => {
-    setIsFavorite(!isFavorite);
+    if (product) {
+      // Verifica se está logado
+      if (!isUserLoggedIn()) {
+        // Abre o modal de login
+        setShowLoginModal(true);
+        return;
+      }
+      
+      // Se estiver logado, favorita/desfavorita
+      const newFavoriteState = toggleFavorite(product);
+      setIsFavorite(newFavoriteState);
+    }
   };
 
   const handleAddToCart = () => {
@@ -436,7 +488,13 @@ export default function ProductSplashScreen({
              maxProducts={4}
            />
          </div>
-      </div>
-    </div>
-  );
-}
+       </div>
+       
+       {/* Modal de Login */}
+       <ProfileShape
+         isVisible={showLoginModal}
+         onClose={() => setShowLoginModal(false)}
+       />
+     </div>
+   );
+ }
