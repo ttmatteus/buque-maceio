@@ -29,24 +29,85 @@ export default function ProfileShape({ isVisible, onClose }: ProfileShapeProps) 
       e.preventDefault();
     }
     
-    // Conta padrão de teste: admin / admin123
-    if (email === 'admin' && password === 'admin123') {
-      // Salva no localStorage
+    // Validação básica
+    if (!email || !password) {
+      alert('Por favor, preencha todos os campos!');
+      return;
+    }
+    
+    // Busca usuários cadastrados
+    const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = existingUsers.find((u: { email: string; password: string }) => 
+      u.email === email && u.password === password
+    );
+    
+    if (user) {
+      // Login bem-sucedido
       localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('userName', 'admin');
       localStorage.setItem('userEmail', email);
+      // Usa o email como nome de usuário (parte antes do @)
+      const userName = email.split('@')[0];
+      localStorage.setItem('userName', userName);
       // Fecha o modal e recarrega para atualizar o header
       onClose();
       window.location.reload();
     } else {
       // Mostra mensagem de erro se as credenciais estiverem incorretas
-      alert('Credenciais inválidas! Use: admin / admin123');
+      alert('Email ou senha incorretos!');
     }
   };
 
-  const handleSignUp = () => {
-    // Lógica de cadastro aqui
-    alert('Funcionalidade de cadastro em desenvolvimento!');
+  const handleSignUp = (e?: React.FormEvent) => {
+    if (e) {
+      e.preventDefault();
+    }
+    
+    // Validação básica
+    if (!email || !password) {
+      alert('Por favor, preencha todos os campos!');
+      return;
+    }
+    
+    // Validação de email simples
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert('Por favor, insira um email válido!');
+      return;
+    }
+    
+    // Validação de senha (mínimo 6 caracteres)
+    if (password.length < 6) {
+      alert('A senha deve ter pelo menos 6 caracteres!');
+      return;
+    }
+    
+    // Verifica se o email já está cadastrado
+    const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+    if (existingUsers.some((user: { email: string }) => user.email === email)) {
+      alert('Este email já está cadastrado!');
+      return;
+    }
+    
+    // Cria o novo usuário
+    const newUser = {
+      email: email,
+      password: password // Em produção, isso deveria ser hash
+    };
+    
+    // Salva o usuário
+    existingUsers.push(newUser);
+    localStorage.setItem('users', JSON.stringify(existingUsers));
+    
+    // Faz login automaticamente
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('userEmail', email);
+    // Usa o email como nome de usuário (parte antes do @)
+    const userName = email.split('@')[0];
+    localStorage.setItem('userName', userName);
+    
+    // Fecha o modal e recarrega para atualizar o header
+    onClose();
+    window.location.reload();
   };
   
   if (!isVisible) return null;
@@ -170,7 +231,7 @@ export default function ProfileShape({ isVisible, onClose }: ProfileShapeProps) 
               margin: '0',
               marginTop: '19px'
             }}>
-              Bem vindo a Buquê Maceió
+              Bem vindo a Floral Buquê
             </h2>
             
             {/* Subtítulo */}

@@ -12,6 +12,7 @@ import { generateProductUrl } from '../utils/slugUtils';
 import { Header } from './layout';
 import ProfileShape from './ProfileShape';
 import { isFavorite as checkIsFavorite, toggleFavorite, isUserLoggedIn } from '../utils/favoritesUtils';
+import { addToCart } from '../utils/cartUtils';
 
 interface BreadcrumbItem {
   label: string;
@@ -286,8 +287,10 @@ export default function ProductSplashScreen({
 
   // fazer depois as funções
   const handleBuyNow = () => {
-    // Implementar lógica de compra
-    onClose();
+    if (product) {
+      addToCart(product, quantity);
+      router.push('/pedidos');
+    }
   };
 
   const handleAddToWishlist = () => {
@@ -306,7 +309,10 @@ export default function ProductSplashScreen({
   };
 
   const handleAddToCart = () => {
-    // Implementar lógica de carrinho
+    if (product) {
+      addToCart(product, quantity);
+      onClose();
+    }
   };
 
   const handleRelatedProductClick = (relatedProduct: Product) => {

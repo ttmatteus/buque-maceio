@@ -1,2 +1,2 @@
 // Estilos da página de perfil
-export * from './PerfilPage.css';
+import './PerfilPage.css';

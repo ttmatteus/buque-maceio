@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
                 />
               </div>
               <div className="logo-text">
-                <h3 className="company-name">Buquê Maceió</h3>
+                <h3 className="company-name">Floral Buquê</h3>
                 <p className="company-tagline">Flores e Elegância</p>
               </div>
             </div>
@@ -97,7 +97,7 @@ const Footer: React.FC = () => {
 
       {/* Copyright */}
       <div className="footer-copyright">
-        <p>© 2025 Buquê Maceió. Todos os direitos reservados.</p>
+        <p>© 2025 Floral Buquê. Todos os direitos reservados.</p>
       </div>
     </footer>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Header, Footer, Pagination } from '../../components';
 import { ProductCard } from '../../components/products';
 import { User, ShoppingCart, ChevronDown, ChevronRight, Heart } from 'lucide-react';
@@ -10,6 +11,7 @@ import '../../styles/components/Pagination.css';
 import '../styles/PerfilPage.css';
 
 const PerfilPage: React.FC = () => {
+  const router = useRouter();
   const [isMinhaContaOpen, setIsMinhaContaOpen] = useState(false);
   const [isMinhasListasOpen, setIsMinhasListasOpen] = useState(false);
   const [showMeusFavoritos, setShowMeusFavoritos] = useState(false);
@@ -17,10 +19,20 @@ const PerfilPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
   const [isMounted, setIsMounted] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  const [userName, setUserName] = useState('Username');
 
   // Garantir que o componente está montado no cliente antes de acessar localStorage
   useEffect(() => {
     setIsMounted(true);
+    
+    // Carrega o email e nome do usuário logado
+    if (typeof window !== 'undefined') {
+      const email = localStorage.getItem('userEmail') || '';
+      const name = localStorage.getItem('userName') || 'Username';
+      setUserEmail(email);
+      setUserName(name);
+    }
   }, []);
 
   useEffect(() => {
@@ -129,7 +141,7 @@ const PerfilPage: React.FC = () => {
         {/* Grid Demo Elements */}
         <div className="grid-demo">
           <div className="profile-menu">
-            <div className="profile-username">Username</div>
+            <div className="profile-username">{userName}</div>
             
             <div className="profile-section">
               <div className="profile-section-header" onClick={toggleMinhaConta}>
@@ -151,7 +163,11 @@ const PerfilPage: React.FC = () => {
             </div>
             
             <div className="profile-section">
-              <div className="profile-section-header">
+              <div 
+                className="profile-section-header"
+                onClick={() => router.push('/pedidos')}
+                style={{ cursor: 'pointer' }}
+              >
                 <div>
                   <ShoppingCart size={14} />
                   <span>Meus Pedidos</span>
@@ -306,7 +322,12 @@ const PerfilPage: React.FC = () => {
                   <div className="form-row">
                     <div className="form-group">
                       <label>Email</label>
-                      <input type="email" placeholder="Email" />
+                      <input 
+                        type="email" 
+                        placeholder="Email" 
+                        value={userEmail}
+                        onChange={(e) => setUserEmail(e.target.value)}
+                      />
                     </div>
                     <div className="form-group">
                       <label>Celular</label>

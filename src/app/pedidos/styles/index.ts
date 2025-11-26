@@ -1,0 +1,2 @@
+import './PedidosPage.css';
+

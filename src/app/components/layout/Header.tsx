@@ -11,6 +11,7 @@ import UserProfileDropdown from '../UserProfileDropdown';
 import ProfileShape from '../ProfileShape';
 import { Product } from '../../types/product';
 import { generateProductSlug } from '../../utils/slugUtils';
+import { getCartItemsCount } from '../../utils/cartUtils';
 
 // tt: cuidado com o dropdown se mexer vai conflitar 
 const Header: React.FC = () => {
@@ -19,6 +20,7 @@ const Header: React.FC = () => {
   const [showProfileShape, setShowProfileShape] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
+  const [cartItemsCount, setCartItemsCount] = useState(0);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -28,6 +30,21 @@ const Header: React.FC = () => {
     const name = localStorage.getItem('userName');
     setIsLoggedIn(loggedIn);
     setUserName(name);
+    
+    // Atualiza contador do carrinho
+    setCartItemsCount(getCartItemsCount());
+  }, []);
+
+  // Atualiza contador do carrinho quando houver mudanças
+  useEffect(() => {
+    const handleCartUpdate = () => {
+      setCartItemsCount(getCartItemsCount());
+    };
+
+    window.addEventListener('cartUpdated', handleCartUpdate);
+    return () => {
+      window.removeEventListener('cartUpdated', handleCartUpdate);
+    };
   }, []);
 
   // Fecha dropdown ao clicar fora
@@ -161,7 +178,7 @@ const Header: React.FC = () => {
                 />
               </div>
               <div className="header-brand-text">
-                <h1 className="header-title">Buquê Maceió</h1>
+                <h1 className="header-title">Floral Buquê</h1>
                 <p className="header-subtitle">Flores e Elegância</p>
               </div>
             </div>
@@ -316,8 +333,12 @@ const Header: React.FC = () => {
                       }}
                       onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F5F5F5'}
                       onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                      onClick={() => {
+                        setOpenUserProfileDropdown(false);
+                        router.push('/pedidos');
+                      }}
                       >
-                        Meu Pedidos
+                        Meus Pedidos
                       </div>
                     </div>
                     
@@ -366,13 +387,14 @@ const Header: React.FC = () => {
                 whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.2 }}
                 onClick={() => {
+                  // Sempre define o flag para abrir favoritos
+                  localStorage.setItem('openFavoritos', 'true');
+                  
                   if (pathname === '/perfil') {
                     // Se já está na página de perfil, apenas mostra favoritos
-                    localStorage.setItem('openFavoritos', 'true');
                     window.dispatchEvent(new Event('showFavoritos'));
                   } else {
                     // Se não está, navega e mostra favoritos
-                    localStorage.setItem('openFavoritos', 'true');
                     router.push('/perfil');
                   }
                 }}
@@ -395,6 +417,8 @@ const Header: React.FC = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.2 }}
+                onClick={() => router.push('/pedidos')}
+                style={{ position: 'relative' }}
               >
                 <Image
                   src="/images/icons/cesta.svg"
@@ -403,6 +427,26 @@ const Header: React.FC = () => {
                   height={24}
                   className="w-6 h-6"
                 />
+                {cartItemsCount > 0 && (
+                  <span style={{
+                    position: 'absolute',
+                    top: '-4px',
+                    right: '-4px',
+                    backgroundColor: '#FF5353',
+                    color: '#FFFFFF',
+                    borderRadius: '50%',
+                    width: '18px',
+                    height: '18px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '11px',
+                    fontWeight: '600',
+                    fontFamily: 'Inter, sans-serif'
+                  }}>
+                    {cartItemsCount > 99 ? '99+' : cartItemsCount}
+                  </span>
+                )}
               </motion.button>
             </div>
           </div>

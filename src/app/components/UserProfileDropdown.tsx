@@ -46,7 +46,8 @@ const UserProfileDropdown: React.FC<UserProfileDropdownProps> = ({
         router.push('/perfil');
         break;
       case 'orders':
-        // redirecionar para página de pedidos (fazer dps)
+        // redirecionar para página de pedidos
+        router.push('/pedidos');
         break;
       case 'logout':
         // implementar logout (fazer a logica pra invaladir token)

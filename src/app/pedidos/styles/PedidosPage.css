@@ -1,0 +1,5 @@
+.pedidos-page {
+  width: 100%;
+  min-height: calc(100vh - 112px - 140px);
+}
+
