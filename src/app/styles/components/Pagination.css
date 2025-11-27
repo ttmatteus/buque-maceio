@@ -1,0 +1,168 @@
+/* ========================================
+   PAGINATION COMPONENT STYLES
+   ======================================== */
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0;
+  margin-top: 40px;
+}
+
+/* Componente principal de paginação */
+.pagination-component {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 16px 24px;
+  gap: 0;
+}
+
+/* Botões de navegação (Anterior/Próximo) */
+.pagination-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background-color: #f3f4f6;
+  border-radius: 6px;
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Botão Anterior com cor diferente */
+.pagination-button.pagination-prev {
+  color: #6B7280;
+}
+
+.pagination-button.pagination-prev .pagination-chevron {
+  color: #6B7280;
+}
+
+/* Botão Próximo mantém cor original */
+.pagination-button.pagination-next {
+  color: #333;
+}
+
+.pagination-button.pagination-next .pagination-chevron {
+  color: #333;
+}
+
+.pagination-chevron {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Separadores verticais */
+.pagination-separator {
+  width: 2px;
+  height: 24px;
+  background: #e5e7eb;
+  margin: 0 16px;
+  flex-shrink: 0;
+}
+
+/* Container dos números das páginas */
+.pagination-pages {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Botões das páginas */
+.pagination-page {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  box-shadow: none;
+}
+
+.pagination-page:hover {
+  background-color: #f3f4f6;
+  outline: none;
+  border: none;
+}
+
+.pagination-page:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+.pagination-page.active {
+  background-color: transparent !important;
+  color: #333 !important;
+  font-weight: 600;
+  outline: none !important;
+  border: 2px solid #e5e7eb !important;
+  box-shadow: none !important;
+}
+
+/* Elipsis */
+.pagination-ellipsis {
+  color: #8B5CF6;
+  font-weight: bold;
+  padding: 0 8px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .pagination-component {
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px 16px;
+  }
+  
+  .pagination-separator {
+    width: 100%;
+    height: 2px;
+    margin: 8px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination-container {
+    padding: 24px 16px;
+  }
+  
+  .pagination-component {
+    padding: 16px 12px;
+  }
+  
+  .pagination-page {
+    width: 36px;
+    height: 36px;
+    font-size: 13px;
+  }
+  
+  .pagination-button {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+}

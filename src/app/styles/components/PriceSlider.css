@@ -1,0 +1,150 @@
+/* ========================================
+   PRICE SLIDER COMPONENT STYLES
+   ======================================== */
+
+.price-slider-container {
+  padding: 12px 0;
+}
+
+.price-slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.price-slider-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #1C1C1C;
+}
+
+.price-slider-values {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #1C1C1C;
+  background: #f3f4f6;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.price-slider-wrapper {
+  position: relative;
+  height: 20px;
+  margin-bottom: 12px;
+}
+
+.price-slider-track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 2px;
+  transform: translateY(-50%);
+}
+
+.price-slider-range {
+  position: absolute;
+  top: 50%;
+  height: 4px;
+  background: #1C1C1C;
+  border-radius: 2px;
+  transform: translateY(-50%);
+}
+
+.price-slider-input {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background: none;
+  pointer-events: none;
+  transform: translateY(-50%);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.price-slider-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #1C1C1C;
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: all;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.price-slider-input::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.price-slider-input::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #1C1C1C;
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: all;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.price-slider-input::-moz-range-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.price-slider-input::-webkit-slider-track {
+  background: transparent;
+  height: 4px;
+}
+
+.price-slider-input::-moz-range-track {
+  background: transparent;
+  height: 4px;
+  border: none;
+}
+
+.price-slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.price-slider-min-label,
+.price-slider-max-label {
+  font-weight: 500;
+}
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .price-slider-container {
+    padding: 12px 0;
+  }
+  
+  .price-slider-header {
+    margin-bottom: 16px;
+  }
+  
+  .price-slider-label {
+    font-size: 13px;
+  }
+  
+  .price-slider-values {
+    font-size: 13px;
+  }
+}

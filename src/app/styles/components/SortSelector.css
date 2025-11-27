@@ -1,0 +1,124 @@
+.sort-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.sort-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1C1C1C;
+  white-space: nowrap;
+}
+
+.sort-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.sort-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: white;
+  border: 1px solid #1C1C1C;
+  border-radius: 8px;
+  padding: 6px 32px 6px 12px;
+  font-family: 'AG Text', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #1C1C1C;
+  cursor: pointer;
+  min-width: 140px;
+  height: 32px;
+  line-height: 20px;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.sort-select:hover {
+  background-color: #f9fafb;
+}
+
+.sort-select:focus {
+  outline: none;
+  border-color: #1C1C1C;
+  box-shadow: 0 0 0 2px rgba(28, 28, 28, 0.1);
+}
+
+.sort-chevron {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  color: #6B7280;
+  pointer-events: none;
+  transition: transform 0.2s ease;
+}
+
+.sort-chevron.rotated {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.sort-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #1C1C1C;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 20;
+  overflow: hidden;
+}
+
+.sort-option {
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: white;
+  color: #1C1C1C;
+  font-family: 'AG Text', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.sort-option:last-child {
+  border-bottom: none;
+}
+
+.sort-option:hover {
+  background-color: #f9fafb;
+}
+
+.sort-option.selected {
+  background-color: #1C1C1C;
+  color: white;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .sort-selector {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin-left: 0;
+    margin-top: 8px;
+  }
+  
+  .sort-select {
+    min-width: 120px;
+    width: 100%;
+  }
+}

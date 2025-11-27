@@ -1,0 +1,20 @@
+# Arquivos de desenvolvimento
+node_modules/
+.next/
+.env*
+*.log
+
+# Arquivos de build temporários
+out/.next/
+out/node_modules/
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de controle de versão
+.git/
+.gitignore
+
+# Arquivos de configuração local
+*.local

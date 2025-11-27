@@ -1,0 +1,428 @@
+/* ========================================
+   FEATURED BOUQUETS COMPONENT STYLES
+   ======================================== */
+
+/* ========================================
+   CONTAINER PRINCIPAL
+   ======================================== */
+/* Seção principal dos buquês em destaque */
+.featured-bouquets-section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  background-color: white;
+}
+
+/* Container interno para centralizar conteúdo */
+.featured-bouquets-container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* ========================================
+   RESPONSIVIDADE DO CONTAINER
+   ======================================== */
+/* Ajuste de padding para telas médias */
+@media (min-width: 640px) {
+  .featured-bouquets-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Ajuste de padding para telas grandes */
+@media (min-width: 1024px) {
+  .featured-bouquets-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* ========================================
+   HEADER DA SEÇÃO
+   ======================================== */
+/* Container do cabeçalho da seção */
+.featured-bouquets-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+/* Título principal da seção */
+.featured-bouquets-title {
+  font-size: 1.875rem;
+  margin-bottom: 1rem;
+  font-family: 'Alegreya SC', serif;
+  font-weight: 500;
+  color: black;
+}
+
+/* Subtítulo descritivo da seção */
+.featured-bouquets-subtitle {
+  font-size: 1rem;
+  max-width: 48rem;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  color: black;
+}
+
+/* ========================================
+   GRID DE PRODUTOS
+   ======================================== */
+/* Grid responsivo dos produtos */
+.featured-bouquets-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem 1rem;
+}
+
+/* Grid de 2 colunas para tablets */
+@media (min-width: 768px) {
+  .featured-bouquets-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Grid de 4 colunas para desktop */
+@media (min-width: 1024px) {
+  .featured-bouquets-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ========================================
+   ITEM DO PRODUTO
+   ======================================== */
+/* Container individual de cada produto */
+.featured-product-item {
+  overflow: hidden;
+  width: 300px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+
+/* Hover do item do produto (elevação) */
+.featured-product-item:hover {
+  transform: translateY(-4px);
+}
+
+/* Efeito de clique para cards clicáveis */
+.featured-product-item.clickable {
+  cursor: pointer;
+}
+
+.featured-product-item.clickable:active {
+  transform: translateY(-2px);
+  transition: transform 0.1s;
+}
+
+/* ========================================
+   IMAGEM DO PRODUTO
+   ======================================== */
+/* Container da imagem com posicionamento relativo */
+.featured-product-image-container {
+  position: relative;
+  width: 271px;
+  height: 328px;
+  overflow: hidden;
+}
+
+/* Imagem do produto */
+.featured-product-image {
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+/* Hover da imagem (zoom) */
+.featured-product-item:hover .featured-product-image {
+  transform: scale(1.05);
+}
+
+/* ========================================
+   BADGE DA CATEGORIA
+   ======================================== */
+/* Badge posicionado sobre a imagem */
+.featured-category-badge {
+  position: absolute;
+  top: 1.5rem;
+  right: 0.75rem;
+  width: 84px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+/* Hover do badge */
+.featured-product-item:hover .featured-category-badge {
+  transform: scale(1.05);
+}
+
+/* ========================================
+   CORES DAS CATEGORIAS
+   ======================================== */
+/* Categoria Romântico - Vermelho/Rosa */
+.featured-category-romantico {
+  color: #CA3500;
+  background-color: #FFA6A6;
+}
+
+/* Categoria Combos - Verde */
+.featured-category-combos {
+  color: #00943B;
+  background-color: #B9F8CF;
+}
+
+/* Categoria Alegre - Amarelo */
+.featured-category-alegre {
+  color: #D08700;
+  background-color: #FFF085;
+}
+
+/* Categoria Delicado - Rosa claro */
+.featured-category-delicado {
+  color: #FF8AA7;
+  background-color: #FFD7DC;
+}
+
+/* Categoria Clássico - Cinza */
+.featured-category-classico {
+  color: #161616;
+  background-color: #E5E5E5;
+}
+
+/* Categoria Elegante - Azul claro */
+.featured-category-elegante {
+  color: #1E40AF;
+  background-color: #DBEAFE;
+}
+
+/* Categoria Luxo - Dourado */
+.featured-category-luxo {
+  color: #92400E;
+  background-color: #FEF3C7;
+}
+
+/* Categoria Exótico - Roxo */
+.featured-category-exotico {
+  color: #7C3AED;
+  background-color: #E9D5FF;
+}
+
+/* Categoria Aromático - Verde escuro */
+.featured-category-aromatico {
+  color: #065F46;
+  background-color: #D1FAE5;
+}
+
+/* ========================================
+   CONTEÚDO DO PRODUTO
+   ======================================== */
+/* Container do conteúdo textual do produto */
+.featured-product-content {
+  padding-left: 0;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 220px;
+  align-items: flex-start;
+}
+
+/* ========================================
+   NOME DO PRODUTO
+   ======================================== */
+/* Título do produto */
+.featured-product-name {
+  margin-bottom: 1rem;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  color: black;
+}
+
+/* ========================================
+   DESCRIÇÃO
+   ======================================== */
+/* Descrição do produto com truncamento */
+.featured-product-description {
+  margin-bottom: 0.75rem;
+  flex: 1;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+  font-weight: 200;
+  font-size: 14px;
+  color: black;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+  max-height: 2.4em;
+}
+
+/* ========================================
+   CONTAINER DE INFORMAÇÕES
+   ======================================== */
+/* Container das informações do produto (rating, preço, estoque) */
+.featured-product-info {
+  margin-top: 0.25rem;
+}
+
+/* ========================================
+   AVALIAÇÃO
+   ======================================== */
+/* Container da avaliação com estrelas */
+.featured-product-rating {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Container das estrelas */
+.featured-stars {
+  display: flex;
+  gap: 2px;
+}
+
+/* Estrela individual */
+.featured-star {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+/* Estrela preenchida (amarela) */
+.featured-star.filled {
+  color: #FFD333;
+}
+
+/* Estrela vazia (cinza) */
+.featured-star.empty {
+  color: #C4C4C4;
+}
+
+/* Contador de avaliações */
+.featured-reviews-count {
+  margin-left: 0.5rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  color: #8D8D8D;
+}
+
+/* ========================================
+   PREÇO
+   ======================================== */
+/* Container do preço */
+.featured-product-price-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 0.5rem;
+  margin-top: 0.75rem;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+/* Preço do produto */
+.featured-product-price {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: black;
+}
+
+/* ========================================
+   STATUS DO ESTOQUE
+   ======================================== */
+/* Status base do estoque */
+.featured-product-stock {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+}
+
+/* Status "Em estoque" - Verde */
+.featured-product-stock.in-stock {
+  color: #05DF72;
+}
+
+/* Status "Restam X" - Vermelho */
+.featured-product-stock.low-stock {
+  color: #E53935;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  .featured-bouquets-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .featured-product-item {
+    width: 100%;
+  }
+  
+  .featured-product-image-container {
+    width: 100%;
+    height: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .featured-bouquets-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .featured-bouquets-title {
+    font-size: 1.5rem;
+  }
+  
+  .featured-product-content {
+    height: auto;
+    min-height: 200px;
+  }
+  
+  .featured-product-name {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .featured-bouquets-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .featured-product-item {
+    max-width: 350px;
+    margin: 0 auto;
+  }
+  
+  .featured-product-image-container {
+    height: 250px;
+  }
+  
+  .featured-bouquets-header {
+    margin-bottom: 2rem;
+  }
+  
+  .featured-bouquets-title {
+    font-size: 1.25rem;
+  }
+  
+  .featured-bouquets-subtitle {
+    font-size: 0.875rem;
+  }
+}

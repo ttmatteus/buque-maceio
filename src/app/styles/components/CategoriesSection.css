@@ -1,0 +1,295 @@
+/* ========================================
+   CATEGORIES SECTION COMPONENT STYLES
+   ======================================== */
+
+/* ========================================
+   CONTAINER PRINCIPAL
+   ======================================== */
+/* Seção principal das categorias */
+.categories-section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  background-color: white;
+  width: 100%;
+  overflow: visible;
+}
+
+/* Container interno para centralizar conteúdo */
+.categories-container {
+  width: 100%;
+  max-width: none;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+/* ========================================
+   RESPONSIVIDADE DO CONTAINER
+   ======================================== */
+/* Ajuste de padding para telas médias */
+@media (min-width: 640px) {
+  .categories-container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* Ajuste de padding para telas grandes */
+@media (min-width: 1024px) {
+  .categories-container {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+/* ========================================
+   CARROSSEL DE CATEGORIAS
+   ======================================== */
+/* Layout flexível do carrossel com navegação */
+.categories-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  width: 100%;
+}
+
+/* ========================================
+   BOTÕES DE NAVEGAÇÃO
+   ======================================== */
+/* Botão de navegação base (anterior/próximo) */
+.categories-nav-button {
+  min-width: 40px;
+  min-height: 40px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  background-color: rgba(247, 247, 247, 0.8);
+}
+
+/* Hover dos botões de navegação */
+.categories-nav-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+/* Botão de navegação anterior (esquerda) */
+.categories-nav-button.prev {
+  margin-right: 70px;
+}
+
+/* Botão de navegação próximo (direita) */
+.categories-nav-button.next {
+  margin-left: 70px;
+}
+
+/* Ícone SVG dos botões de navegação */
+.categories-nav-button svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: color 0.3s;
+  fill: none;
+  stroke: #8B8B8B;
+}
+
+/* Hover do ícone SVG */
+.categories-nav-button:hover svg {
+  stroke: #404040;
+}
+
+/* ========================================
+   GRID DE CATEGORIAS
+   ======================================== */
+/* Container flexível das categorias */
+.categories-grid {
+  display: flex;
+  gap: 3.5rem;
+  overflow: visible;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========================================
+   ITEM DE CATEGORIA
+   ======================================== */
+/* Container individual de cada categoria */
+.category-item {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s;
+}
+
+/* Hover do item de categoria */
+.category-item:hover {
+  transform: scale(1.05);
+}
+
+/* Container da imagem da categoria (círculo) */
+.category-image-container {
+  position: relative;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+/* Hover do container da imagem */
+.category-item:hover .category-image-container {
+  transform: scale(1.05);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+/* Imagem da categoria */
+.category-image {
+  object-fit: contain;
+  transition: transform 0.3s;
+}
+
+/* Hover da imagem da categoria */
+.category-item:hover .category-image {
+  transform: scale(1.1);
+}
+
+/* Container do texto da categoria */
+.category-text {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* Nome da categoria */
+.category-name {
+  transition: all 0.3s;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: black;
+}
+
+/* Hover do nome da categoria */
+.category-item:hover .category-name {
+  transform: scale(1.05);
+  color: black;
+}
+
+/* Estado ativo do item de categoria - removido */
+
+/* Indicadores removidos */
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  .categories-grid {
+    gap: 2rem;
+  }
+  
+  .category-image-container {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .categories-nav-button.prev {
+    margin-right: 40px;
+  }
+  
+  .categories-nav-button.next {
+    margin-left: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .categories-section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  
+  .categories-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .categories-grid {
+    gap: 1.5rem;
+  }
+  
+  .category-image-container {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .category-name {
+    font-size: 14px;
+  }
+  
+  .categories-nav-button {
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+    min-height: 35px;
+  }
+  
+  .categories-nav-button.prev {
+    margin-right: 20px;
+  }
+  
+  .categories-nav-button.next {
+    margin-left: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .categories-carousel {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .categories-grid {
+    order: 2;
+    gap: 1rem;
+  }
+  
+  .categories-nav-button.prev {
+    order: 1;
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .categories-nav-button.next {
+    order: 3;
+    margin-left: 0;
+    margin-top: 1rem;
+  }
+  
+  .category-image-container {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .category-name {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .categories-grid {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+  
+  .category-image-container {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .category-name {
+    font-size: 11px;
+  }
+}

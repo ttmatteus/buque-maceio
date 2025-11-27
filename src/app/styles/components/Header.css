@@ -1,0 +1,677 @@
+/* ========================================
+   HEADER COMPONENT STYLES
+   ======================================== */
+
+/* ========================================
+   BARRA SUPERIOR BRANCA
+   ======================================== */
+/* Container principal da barra superior branca */
+.header-top {
+  background-color: #F0F1F2;
+  border-bottom: 1px solid #e5e7eb;
+  position: relative;
+  z-index: 9999999;
+}
+
+/* Container interno para centralizar conteúdo */
+.header-container {
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* Layout flexível da barra superior com logo, pesquisa e ícones */
+.header-content {
+  display: flex;
+  align-items: center;
+  height: 5rem;
+  padding-left: 0.5rem;
+  padding-right: 1.5rem;
+  max-width: 100%;
+  flex-wrap: nowrap;
+}
+
+/* ========================================
+   LOGO E NOME DA EMPRESA
+   ======================================== */
+/* Container do logo e texto da marca */
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 0;
+  transition: all 0.3s ease;
+}
+
+.header-brand:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+/* Container do logo com posicionamento relativo */
+.header-logo {
+  position: relative;
+}
+
+/* Estilização da imagem do logo com filtro dourado */
+.header-logo img {
+  height: 3rem;
+  width: 3rem;
+  object-fit: contain;
+  filter: sepia(100%) saturate(300%) hue-rotate(-10deg) brightness(0.9);
+}
+
+/* Container do texto da marca (nome e subtítulo) */
+.header-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Título principal da marca */
+.header-title {
+  letter-spacing: 0.025em;
+  line-height: 1.25;
+  font-size: 40px;
+  color: #161616;
+  font-family: 'Alegreya SC', serif;
+  font-weight: 500;
+}
+
+/* Subtítulo da marca */
+.header-subtitle {
+  letter-spacing: 0.025em;
+  line-height: 1.25;
+  margin-top: -0.25rem;
+  font-size: 16px;
+  color: #484848;
+  font-family: 'Alegreya SC', serif;
+  font-weight: 500;
+}
+
+/* ========================================
+   BARRA DE PESQUISA
+   ======================================== */
+/* Container da barra de pesquisa centralizada */
+.header-search {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 0;
+  margin-right: 350px;
+  max-width: 100%;
+}
+
+/* Container do campo de pesquisa com posicionamento relativo */
+.search-container {
+  position: relative !important;
+  width: 490px !important;
+  height: 36px !important;
+  max-width: 480px !important;
+  min-width: 420px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Ícone da lupa posicionado dentro do campo */
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  padding-left: 0.75rem;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Estilização do ícone SVG da lupa */
+.search-icon svg {
+  height: 1.25rem;
+  width: 1.25rem;
+  color: #9ca3af;
+}
+
+/* Campo de input da pesquisa */
+.search-input {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding-left: 2.5rem;
+  padding-right: 0.75rem;
+  padding-top: 0;
+  padding-bottom: 0;
+  border: 1px solid #C4C4C4;
+  border-radius: 0.375rem;
+  line-height: 1.25rem;
+  background-color: white;
+  color: black;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* Estilização do placeholder do campo */
+.search-input::placeholder {
+  color: #71717A;
+  font-family: 'M3/Display', sans-serif;
+  font-size: 0.875rem; /* text-sm = 14px */
+  line-height: 1.25; /* leading-5 = 20px */
+  font-weight: normal;
+}
+
+/* Remove outline ao focar no campo */
+.search-input:focus {
+  outline: none;
+}
+
+/* Botão de limpar busca */
+.search-clear {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.search-clear:hover {
+  color: #6b7280;
+  background: #f3f4f6;
+}
+
+/* ========================================
+   ÍCONES DO USUÁRIO
+   ======================================== */
+/* Container dos ícones de ação (perfil, favoritos, carrinho) */
+.header-actions {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-top: -8px;
+}
+
+/* Botão base para os ícones */
+.header-button {
+  color: black;
+  transition: color 0.2s;
+}
+
+/* Hover padrão dos botões */
+.header-button:hover {
+  color: #4b5563;
+}
+
+/* Hover especial para o botão de favoritos (vermelho) */
+.header-button.favorites:hover {
+  color: #ef4444;
+}
+
+/* Tamanho dos ícones SVG */
+.header-button img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* ========================================
+   BARRA INFERIOR PRETA
+   ======================================== */
+/* Container da barra de navegação inferior */
+.header-bottom {
+  background-color: black;
+  position: relative;
+  z-index: 9999;
+}
+
+/* Container interno da navegação */
+.header-nav-container {
+  width: 100%;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Layout da barra de navegação */
+.header-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 55px
+}
+
+/* Menu de navegação com os links */
+.header-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 2rem; 
+}
+
+/* Botões de navegação individuais */
+.header-nav-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #FFFFFF;
+  font-family: 'Alegreya SC', serif;
+  font-weight: bold;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+/* Hover dos botões de navegação (dourado) */
+.header-nav-button:hover {
+  color: #FFD950;
+}
+
+/* ========================================
+   DROPDOWN DE SENTIMENTOS
+   ======================================== */
+/* Container do dropdown */
+.header-nav-dropdown {
+  position: relative;
+  z-index: 999999;
+}
+
+/* Dropdown de sentimentos */
+.sentimentos-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: -30px;
+  transform: none;
+  background-color: #000000;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  padding: 12px 0;
+  min-width: 150px;
+  z-index: 999999;
+  margin-top: 0;
+  overflow: hidden;
+}
+
+/* Header do dropdown - removido */
+
+/* Opção individual do dropdown */
+.sentimento-option {
+  display: block;
+  width: 100%;
+  padding: 16px 20px;
+  text-align: center;
+  background: none;
+  border: none;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 0;
+}
+
+/* Hover das opções */
+.sentimento-option:hover {
+  background-color: #FFD950;
+  color: #000000;
+}
+
+/* Primeira opção com borda superior arredondada */
+.sentimento-option:first-child {
+  margin-top: 0;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+/* Última opção com borda inferior arredondada */
+.sentimento-option:last-child {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+/* ========================================
+   DROPDOWN DO PERFIL DO USUÁRIO
+   ======================================== */
+/* Container do dropdown do perfil */
+.user-profile-dropdown {
+  position: fixed;
+  top: 60px;
+  right: 125px;
+  background-color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 2px 6px 4px 0px rgba(0, 0, 0, 0.25);
+  padding: 13px 13px;
+  width: 170px;
+  height: 190px;
+  z-index: 9999999;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Header com nome do usuário */
+.user-profile-header {
+  padding: 0;
+  margin-bottom: -8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #000000;
+  background-color: #FFFFFF;
+  border-bottom: none;
+}
+
+/* Separador */
+.user-profile-separator {
+  height: 1px;
+  background-color: #E9E9E9;
+  margin: 0;
+  width: 100%;
+  opacity: 1;
+  flex-shrink: 0;
+}
+
+/* Container das opções */
+.user-profile-options {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Opções do menu */
+.user-profile-option {
+  display: block;
+  width: 100%;
+  padding: 0;
+  text-align: left;
+  background: none;
+  border: none;
+  color: #5E5E5E;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin: 0;
+}
+
+/* Hover das opções */
+.user-profile-option:hover {
+  color: #374151;
+}
+
+/* Botão de sair */
+.user-profile-logout {
+  display: block;
+  width: 100%;
+  padding: 0;
+  text-align: left;
+  background: none;
+  border: none;
+  color: #5E5E5E;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin: 0;
+}
+
+/* Hover do botão de sair */
+.user-profile-logout:hover {
+  color: #DC2626;
+}
+
+
+/* ========================================
+   RESPONSIVIDADE
+   ======================================== */
+
+/* Breakpoint para telas muito grandes */
+@media (min-width: 1400px) {
+  .header-content {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  
+  .search-container {
+    max-width: 600px;
+  }
+}
+
+/* Breakpoint para tablets grandes */
+@media (max-width: 1024px) {
+  .header-search {
+    margin-left: 0;
+  }
+  
+  .search-container {
+    max-width: 400px;
+  }
+  
+  .header-nav-menu {
+    gap: 1.5rem;
+  }
+  
+  .header-content {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .header-nav {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Breakpoint para tablets */
+@media (max-width: 768px) {
+  .header-content {
+    padding-left: 0.25rem;
+    padding-right: 0.75rem;
+    height: 4rem;
+    flex-wrap: wrap;
+  }
+  
+  .header-brand {
+    margin-left: 1rem;
+  }
+  
+  .header-title {
+    font-size: 28px;
+  }
+  
+  .header-subtitle {
+    font-size: 14px;
+  }
+  
+  .header-search {
+    margin-left: 0;
+    order: 3;
+    flex: none;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  
+  .search-container {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .header-actions {
+    gap: 1rem;
+  }
+  
+  .header-nav-menu {
+    gap: 1rem;
+  }
+  
+  .header-nav-button {
+    font-size: 12px;
+  }
+  
+  .header-content {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 1rem;
+  }
+  
+  .header-search {
+    order: 3;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  .search-container {
+    max-width: none;
+  }
+  
+  /* Ajuste do dropdown para mobile */
+  .sentimentos-dropdown {
+    min-width: 140px;
+    left: 0;
+    transform: none;
+  }
+  
+  .sentimento-option {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+}
+
+/* Breakpoint para dispositivos móveis grandes */
+@media (max-width: 640px) {
+  .header-content {
+    padding: 0.75rem;
+  }
+  
+  .header-brand {
+    margin-left: 0.5rem;
+  }
+  
+  .header-title {
+    font-size: 24px;
+  }
+  
+  .header-subtitle {
+    font-size: 12px;
+  }
+  
+  .header-actions {
+    gap: 0.75rem;
+  }
+  
+  .header-nav {
+    height: auto;
+    padding: 0.5rem 0;
+  }
+  
+  .header-nav-menu {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+  
+  .header-nav-button {
+    font-size: 11px;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  /* Ajuste do dropdown para mobile pequeno */
+  .sentimentos-dropdown {
+    min-width: 120px;
+  }
+  
+  .sentimento-option {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}
+
+/* Breakpoint para dispositivos móveis pequenos */
+@media (max-width: 480px) {
+  .header-content {
+    flex-direction: column;
+    height: auto;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .header-brand {
+    margin-left: 0;
+    justify-content: center;
+  }
+  
+  .header-search {
+    order: 3;
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .search-container {
+    max-width: none;
+  }
+  
+  .header-actions {
+    order: 2;
+    justify-content: center;
+  }
+  
+  .header-nav {
+    height: auto;
+    padding: 0.5rem 0;
+  }
+  
+  .header-nav-menu {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .header-nav-button {
+    font-size: 10px;
+    padding: 0.4rem 0.6rem;
+  }
+  
+  /* Ajuste do dropdown para mobile muito pequeno */
+  .sentimentos-dropdown {
+    min-width: 100px;
+  }
+  
+  .sentimento-option {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+}
+
+/* Breakpoint para dispositivos muito pequenos */
+@media (max-width: 360px) {
+  .header-title {
+    font-size: 20px;
+  }
+  
+  .header-subtitle {
+    font-size: 11px;
+  }
+  
+  .header-nav-button {
+    font-size: 9px;
+    padding: 0.3rem 0.5rem;
+  }
+  
+  /* Ajuste final do dropdown */
+  .sentimentos-dropdown {
+    min-width: 90px;
+  }
+  
+  .sentimento-option {
+    padding: 5px 6px;
+    font-size: 10px;
+  }
+}
